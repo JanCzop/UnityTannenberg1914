@@ -1,0 +1,105 @@
+===============
+Unity generated
+===============
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+
+Avoid ignoring Asset meta data; it should be included:
+[Aa]ssets/*/.meta
+Auto-generated Jetbrains Rider plugin
+[Aa]ssets/Plugins/Editor/JetBrains*
+
+Unity3D generated meta files
+*.pidb.meta
+
+Unity3D Generated File On Crash Reports
+sysinfo.txt
+
+Builds
+*.apk
+*.aab
+*.unitypackage
+
+Crashlytics generated files
+crashlytics-build.properties
+
+===================================
+Rider and other IDE specific files
+===================================
+User-specific Rider project files
+.idea/
+
+Rider has C# support, but is not used to open scripts in a Unity project
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.opendb
+.VC.db
+
+============
+OS generated
+============
+Windows image file caches
+Thumbs.db
+Thumbs.db:encryptable
+
+Folder config file
+Desktop.ini
+
+Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+macOS generated files
+.DSStore
+.DS_Store?
+.AppleDouble
+.LSOverride
+
+Thumbnails
+.
+
+Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+.Network Trash Folder
+.TemporaryItems
+.apdisk
+
+Temporary files created by macOS
+*.swp
+*.swo
+*.tmp
+
+=================================
+Visual Studio Code configuration
+=================================
+.vscode/
+
+===============
+Asset Store
+===============
+Asset Store tools are stored in the project
+but you should not include the cache files created
+by the Asset Store in version control
+[Uu]ser[Aa]ssets/
+[Aa]sset[Ss]tore/
