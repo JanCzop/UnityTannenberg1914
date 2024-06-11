@@ -7,7 +7,7 @@ public class Tester : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GeneratorHexmap map_gen = new GeneratorHexmap();
+        GeneratorHexmap map_gen = new();
         map_gen.Generate_hexmap();   
     }
 

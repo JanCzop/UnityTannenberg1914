@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Hexmap
 {
-    public const int MAP_LENGTH = 10;
+    public const int MAP_LENGTH = 11;
     public const int MAP_WIDTH = 5;
     private GameObject[][] hexes;
 
