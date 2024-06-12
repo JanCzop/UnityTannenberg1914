@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 40467293348bb894abe2903d484475b3
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - edge_material: {fileID: 2100000, guid: 4ae5dd795b5d0b443b875086acf7cb77, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
