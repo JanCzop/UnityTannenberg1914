@@ -41,6 +41,10 @@ public class Edge_info{
         public Edge Value { get => value; set => this.value = value; }
     }
 
+    public static Hex Get_hex_component(GameObject hex){
+        return hex.GetComponent<Hex>();
+    }
+
 
     public (int, int) Coordinates_x_y { get => coordinates_x_y; set => coordinates_x_y = value; }
     public Hex_allegiance Allegiance { get => allegiance; set => allegiance = value; }

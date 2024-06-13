@@ -12,7 +12,7 @@ public class GeneratorHexmap{
 
     public const string hex_prefab_path = "Prefabs/Hexagon";
 
-    public void Generate_hexmap(){
+    public Hexmap Generate_hexmap(){
         Hexmap map = Create_hexes_map();
         Assign_Edges(map);
         Initialize_hexes_default_properties(map);
@@ -22,6 +22,7 @@ public class GeneratorHexmap{
 
         //map.Print_hexes_neighbours();
         //map.Print_hexes_coords();
+        return map;
     }
 
     private Hexmap Create_hexes_map(){
@@ -124,6 +125,8 @@ private void Setup_test_terrains(Hexmap map){
     map.Hexes[1][4].GetComponent<Hex>().Terrain = Hex.Hex_terrain.SWAMP;
     map.Hexes[1][3].GetComponent<Hex>().Terrain = Hex.Hex_terrain.HILL;
     map.Hexes[2][0].GetComponent<Hex>().Terrain = Hex.Hex_terrain.FOREST;
+    map.Hexes[0][3].GetComponent<Hex>().Edges[0].Value.Separator = Edge.Edge_separator.HUGE_RIVER;
+    map.Hexes[1][3].GetComponent<Hex>().Edges[1].Value.Separator = Edge.Edge_separator.LAKE;
 
 
 }
