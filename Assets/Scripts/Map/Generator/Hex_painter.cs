@@ -29,9 +29,9 @@ public class Hex_painter : MonoBehaviour
             Hex.Hex_terrain.FOREST => FOREST_MATERIAL_PATH,
             Hex.Hex_terrain.SWAMP => SWAMP_MATERIAL_PATH,
             Hex.Hex_terrain.CITY => CITY_MATERIAL_PATH,
-            _ => EDGE_MATERIAL_PATH,
+            _ => "",
         };
-        if(path == EDGE_MATERIAL_PATH) return;
+        if(path == "") return;
         edges_renderer.material = Resources.Load<Material>(path);
     }
 

@@ -5,8 +5,9 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
 
+    public const int UNIT_BASE_HP = 4;
 
-
+    private (string division, string corp, string army) unit_name;
     private (int normal, int declassed) firepower;
     private (int normal, int declassed) effeciency;
     private (int normal, int declassed) movement;
@@ -18,9 +19,28 @@ public class Unit : MonoBehaviour
     private Unit_condition condition;
     private Unit_type type;
 
+    //////////////////////////////
+    private Hex hex;
+    ///////////////////////////
+
+    private Unit_movement_handler movement_handler;
+
+
     public enum Unit_alliegance { GERMAN, RUSSIAN }
     public enum Unit_condition { NORMAL, DOWNGRADED }
     public enum Unit_type {INFANTRY, CAVALRY, ARTILLERY, GENERAL, SUPPLY_WAGON}
+
+
+    public string Get_unit_name(){
+        return this.unit_name.ToString();
+    }
+
+
+    public void Move(Vector3 start, Vector3 end, float velocity)
+    {
+        if (movement_handler != null) movement_handler.MoveUnit(gameObject, start, end, velocity);
+        else Debug.LogError("Error: MovementHandler is not assigned.");
+    }
 
 
     public (int normal, int declassed) Firepower { get => firepower; set => firepower = value; }
@@ -31,4 +51,7 @@ public class Unit : MonoBehaviour
     public Unit_alliegance Alliegance { get => alliegance; set => alliegance = value; }
     public Unit_condition Condition { get => condition; set => condition = value; }
     public Unit_type Type { get => type; set => type = value; }
+    public (string division, string corp, string army) Unit_name { get => unit_name; set => unit_name = value; }
+    public Hex Hex { get => hex; set => hex = value; }
+    public Unit_movement_handler Movement_handler { get => movement_handler; set => movement_handler = value; }
 }

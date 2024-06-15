@@ -13,6 +13,10 @@ public class Hex : MonoBehaviour
     private Hex_allegiance allegiance;
     private Hex_terrain terrain;
 
+    ///////////////////// TODO
+    private Unit unit;
+    ////////////////////
+
     public enum Hex_allegiance{GERMAN,RUSSIAN}
     public enum Hex_terrain{FLAT,HILL,FOREST,SWAMP,LAKE,SEA,SMALL_URBAN,CITY}
 
@@ -41,14 +45,11 @@ public class Edge_info{
         public Edge Value { get => value; set => this.value = value; }
     }
 
-    public static Hex Get_hex_component(GameObject hex){
-        return hex.GetComponent<Hex>();
-    }
-
 
     public (int, int) Coordinates_x_y { get => coordinates_x_y; set => coordinates_x_y = value; }
     public Hex_allegiance Allegiance { get => allegiance; set => allegiance = value; }
     public List<Edge_info> Edges { get => edges; set => edges = value; }
     public Hex_terrain Terrain { get => terrain; set => terrain = value; }
+    public Unit Unit { get => unit; set => unit = value; }
 }
 

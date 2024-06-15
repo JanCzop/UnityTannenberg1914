@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    public static float Terrain_entering_cost(Unit unit ,Hex.Hex_terrain terrain){
-        if(unit.Type == Unit.Unit_type.GENERAL || unit.Type == Unit.Unit_type.SUPPLY_WAGON) return 1;
+    public static float Terrain_entering_cost(Unit.Unit_type type ,Hex.Hex_terrain terrain){
+        if(type == Unit.Unit_type.GENERAL || type == Unit.Unit_type.SUPPLY_WAGON) return 1;
             return terrain switch{
                 Hex.Hex_terrain.FLAT => 0f,
                 Hex.Hex_terrain.HILL => 0f,
@@ -53,16 +53,16 @@ public class Movement : MonoBehaviour
         if(!Is_edge_passable(connection_info.edge)) return false;
         return true;
     }
-    public static float Calculate_movement_cost(Unit unit, Hex hex_src, Hex hex_dest){
+    public static float Calculate_movement_cost(Unit.Unit_type type, Hex hex_src, Hex hex_dest){
         (bool connection_possible, Edge edge) connection_info = Are_hexes_connected(hex_src,hex_dest);
-        if(Is_edge_easily_passable(connection_info.edge.Connector)) return unit.Type switch{
+        if(Is_edge_easily_passable(connection_info.edge.Connector)) return type switch{
                 Unit.Unit_type.SUPPLY_WAGON => 0.5f,
                 _ => 1f,
             };
         else{
             float cost = 1f;
             cost += Edge_passing_cost(connection_info.edge.Separator);
-            cost += Terrain_entering_cost(unit, hex_dest.Terrain);
+            cost += Terrain_entering_cost(type, hex_dest.Terrain);
             return cost;
         }    
     }

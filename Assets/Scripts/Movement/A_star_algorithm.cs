@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class A_star_movement
 {
-    public static List<Hex> Get_reachable_hexes(Hex startHex, float maxCost, Unit unit)
+    public static List<Hex> Get_reachable_hexes(Hex startHex, float maxCost, Unit.Unit_type type)
     {
         Dictionary<Hex, float> distances = new Dictionary<Hex, float>();
         List<Hex> reachableHexes = new List<Hex>();
@@ -27,7 +27,7 @@ public class A_star_movement
                 if (neighborHex == null || !Movement.Movement_posibility(currentHex, neighborHex))
                     continue;
 
-                float cost = Movement.Calculate_movement_cost(unit, currentHex, neighborHex);
+                float cost = Movement.Calculate_movement_cost(type, currentHex, neighborHex);
                 float tentativeDistance = currentDistance + cost;
 
                 if (tentativeDistance <= maxCost)
