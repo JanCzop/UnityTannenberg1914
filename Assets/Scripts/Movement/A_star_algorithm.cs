@@ -5,8 +5,8 @@ public class A_star_movement
 {
     public static List<Hex> Get_reachable_hexes(Hex startHex, float maxCost, Unit.Unit_type type)
     {
-        Dictionary<Hex, float> distances = new Dictionary<Hex, float>();
-        List<Hex> reachableHexes = new List<Hex>();
+        Dictionary<Hex, float> distances = new();
+        List<Hex> reachableHexes = new();
         Priority_Queue<Tuple<float, Hex>> priorityQueue = new Priority_Queue<Tuple<float, Hex>>();
 
         distances[startHex] = 0f;
@@ -23,7 +23,7 @@ public class A_star_movement
 
             foreach (Hex.Edge_info edgeInfo in currentHex.Edges)
             {
-                Hex neighborHex = edgeInfo.Value.Neighbour_hex;
+                Hex neighborHex = edgeInfo.Hex;
                 if (neighborHex == null || !Movement.Movement_posibility(currentHex, neighborHex))
                     continue;
 

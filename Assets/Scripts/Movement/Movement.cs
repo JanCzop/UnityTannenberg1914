@@ -42,7 +42,7 @@ public class Movement : MonoBehaviour
     }
     public static (bool,Edge) Are_hexes_connected(Hex hex_src, Hex hex_dest){
         foreach(Hex.Edge_info edge in hex_src.Edges) {
-            if(edge.Value.Neighbour_hex == hex_dest) return (true,edge.Value);
+            if(edge.Hex == hex_dest) return (true,edge.Value);
         }
         return (false,null);
     }

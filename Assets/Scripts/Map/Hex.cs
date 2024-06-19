@@ -26,7 +26,7 @@ public class Hex : MonoBehaviour
         string result = "Hex " + coordinates_x_y + "\n";
     foreach (var edge in Edges){
         int key = edge.Key;
-        Hex neighbourHex = edge.Value.Neighbour_hex;
+        Hex neighbourHex = edge.Hex;
         if (neighbourHex != null){
             (int x, int y) coordinates = neighbourHex.Coordinates_x_y;
             result += $"Edge {key}, Neighbour Coordinates: x={coordinates.x}, y={coordinates.y}\n";
@@ -38,13 +38,17 @@ public class Hex : MonoBehaviour
 
 public class Edge_info{
     private int key;
-    private Edge value;
-    public Edge_info(int key, Edge value){
+    private Edge edge;
+
+    private Hex hex;
+    public Edge_info(int key, Hex hex){
         this.Key = key;
-        this.Value = value;
+        this.Value = edge;
+        this.Hex = hex;
     }
         public int Key { get => key; set => key = value; }
-        public Edge Value { get => value; set => this.value = value; }
+        public Edge Value { get => edge; set => this.edge = value; }
+        public Hex Hex { get => hex; set => hex = value; }
     }
 
     public bool Set_mutual_edge_properties(int index, Edge.Edge_hex_connector connector, Edge.Edge_separator separator){
@@ -56,7 +60,6 @@ public class Edge_info{
             return true;
         }
     }
-
 
 
     public (int, int) Coordinates_x_y { get => coordinates_x_y; set => coordinates_x_y = value; }

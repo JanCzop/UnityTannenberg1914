@@ -25,14 +25,13 @@ public class Control_map : MonoBehaviour
             (int x, int y) = unit.Hex.Coordinates_x_y;
             control_hexes[x][y] = Assign_control(control_hexes[x][x],unit.Alliegance,true);
             foreach (Hex.Edge_info edge in unit.Hex.Edges){
-                Hex neighbourHex = edge.Value.Neighbour_hex;
+                Hex neighbourHex = edge.Hex;
                 if (neighbourHex.Unit == null){
                                     if(x==1&&y==1) Debug.Log("Im here");
 
                     (int nx, int ny) = neighbourHex.Coordinates_x_y;
                     control_hexes[nx][ny] = Assign_control(control_hexes[nx][ny], unit.Alliegance,false);
                 }
-                else Debug.Log("Unit detected at "+neighbourHex.Coordinates_x_y);
             }
         }
     }
