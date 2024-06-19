@@ -7,32 +7,83 @@ using UnityEngine.TerrainTools;
 public class Hex_painter : MonoBehaviour
 {
     public const string EDGE_MATERIAL_PATH = "Materials/Material_black";
+    public const string DEFAULT_MATERIAL_PATH = "Materials/Material_default";
+
 
     public const string FOREST_MATERIAL_PATH = "Materials/Material_green";
     public const string CITY_MATERIAL_PATH = "Materials/Material_yellow";
     public const string SWAMP_MATERIAL_PATH = "Materials/Material_swamplike";
     public const string HILL_MATERIAL_PATH = "Materials/Material_grey";
+
+    
+    public const string GERMAN_MATERIAL_PATH = "Materials/Control/Material_GERMAN";
+    public const string RUSSIAN_MATERIAL_PATH = "Materials/Control/Material_RUSSIAN";
+    public const string MIXED_MATERIAL_PATH = "Materials/Control/Material_MIXED";
+
     
 
-    public static void Paint_hexes_edges(GameObject hex){
-        Transform edges_transform = hex.transform.Find("Edges");
-        Renderer edges_renderer = edges_transform.GetComponent<Renderer>();
-        edges_renderer.material = Resources.Load<Material>(EDGE_MATERIAL_PATH);
+  
+    private Renderer Get_renderer_reference(Hex hex, string part){
+        Transform edges_transform = hex.transform.Find(part);
+        return edges_transform.GetComponent<Renderer>();
     }
 
-    public static void Paint_hex_via_terrain(GameObject hex){
-        Transform edges_transform = hex.transform.Find("Center");
-        Renderer edges_renderer = edges_transform.GetComponent<Renderer>();
-        Hex.Hex_terrain terrain = hex.GetComponent<Hex>().Terrain;
-        string path = terrain switch{
+    
+
+    public void Paint_hexes_edges(Hexmap map){
+        for(int i = 0; i < map.Hexes.Length; i++) {
+            for(int j = 0; j < map.Hexes[i].Length; j++){
+                Renderer edges_renderer = Get_renderer_reference(map.Hexes[i][j].GetComponent<Hex>(),"Edges");
+                edges_renderer.material = Resources.Load<Material>(EDGE_MATERIAL_PATH);
+            }
+        }
+    }
+
+    public void Reset_hexes_color(Hexmap map){
+        for(int i = 0; i < map.Hexes.Length; i++) {
+            for(int j = 0; j < map.Hexes[i].Length; j++){
+            Hex hex = map.Hexes[i][j].GetComponent<Hex>();
+            Renderer edges_renderer = Get_renderer_reference(hex,"Center");
+            edges_renderer.material = Resources.Load<Material>(DEFAULT_MATERIAL_PATH);
+            }
+        }
+    }
+
+    public void Paint_map_terrain(Hexmap map){
+        Reset_hexes_color(map);
+        for(int i = 0; i < map.Hexes.Length; i++) {
+            for(int j = 0; j < map.Hexes[i].Length; j++){
+            Hex hex = map.Hexes[i][j].GetComponent<Hex>();
+            Renderer edges_renderer = Get_renderer_reference(hex,"Center");
+            Hex.Hex_terrain terrain = hex.Terrain;
+            string path = terrain switch{
             Hex.Hex_terrain.HILL => HILL_MATERIAL_PATH,
             Hex.Hex_terrain.FOREST => FOREST_MATERIAL_PATH,
             Hex.Hex_terrain.SWAMP => SWAMP_MATERIAL_PATH,
             Hex.Hex_terrain.CITY => CITY_MATERIAL_PATH,
-            _ => "",
-        };
-        if(path == "") return;
-        edges_renderer.material = Resources.Load<Material>(path);
+            _ => ""
+            };
+        if(path != "") edges_renderer.material = Resources.Load<Material>(path);
+        } 
+        }
+    }
+
+    public void Paint_control(Hexmap map, Control_map control_map){
+        Reset_hexes_color(map);
+        for(int i = 0; i < map.Hexes.Length; i++) {
+            for(int j = 0; j < map.Hexes[i].Length; j++){
+                Hex hex = map.Hexes[i][j].GetComponent<Hex>();
+                Renderer edges_renderer = Get_renderer_reference(hex, "Center");
+                Control_map.Control_type type = control_map.Control_hexes[i][j];
+                string path = type switch{
+                    Control_map.Control_type.GERMAN => GERMAN_MATERIAL_PATH,
+                    Control_map.Control_type.RUSSIAN => RUSSIAN_MATERIAL_PATH,
+                    Control_map.Control_type.MIXED => MIXED_MATERIAL_PATH,
+                    _ => ""
+                };
+                if(path != "") edges_renderer.material = Resources.Load<Material>(path);
+            }
+        }
     }
 
 }

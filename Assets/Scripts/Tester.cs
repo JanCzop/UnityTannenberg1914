@@ -4,34 +4,79 @@ using UnityEngine;
 
 public class Tester : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public Hexmap map;
+    public List<Unit> units = new();
+
+    //////// MOVE TO BUTTON
+    public Control_map control_map;
+    public Hex_painter hex_painter;
+    /////////////////////////////
     void Start()
-    {
+    {   
+        hex_painter = GetComponent<Hex_painter>();
+        control_map = GetComponent<Control_map>();
+        control_map.Initialize();
+
+
+
         GeneratorHexmap map_gen = new();
         Hexmap map = map_gen.Generate_hexmap();
+        hex_painter.Paint_hexes_edges(map);
+        hex_painter.Paint_map_terrain(map);
+        this.map = map;
+
         
 
-        GameObject hex_to_put_soldier = map.Hexes[1][1];
-        Vector3 hex_position = hex_to_put_soldier.transform.position;
-        GameObject hex_to_travel = map.Hexes[2][4];
-        Vector3 hex_travel_position = hex_to_travel.transform.position;
+        Create_test_units();
 
-        Vector3 coords_1_1 = new Vector3(hex_position.x,0.5f,hex_position.z);
-        GameObject soldier = Unit_generator.Generate_unit(
-            coords_1_1,("TestU","TestC","TestA"),(2,1),(2,1),(3,2),
-            Unit.UNIT_BASE_HP,Unit.Unit_alliegance.GERMAN,Unit.Unit_condition.NORMAL,Unit.Unit_type.INFANTRY
-        );
-        Unit soldier_component = soldier.GetComponent<Unit>();
-        soldier_component.Move(hex_position,hex_travel_position,0.1f);
+        //soldier_component.Move(hex_position,hex_travel_position,0.1f);
 
 
         //float cost = Movement.Calculate_movement_cost(soldier,Hex.Get_hex_component(map.Hexes[1][1]),Hex.Get_hex_component(map.Hexes[2][0]));
         //Debug.Log(cost);
 
-        List<Hex> path = A_star_movement.Get_reachable_hexes(map.Hexes[0][3].GetComponent<Hex>(),2f,Unit.Unit_type.INFANTRY);
-        foreach (Hex hex in path){
-            Debug.Log(hex.Coordinates_x_y);
-        }
+        //List<Hex> path = A_star_movement.Get_reachable_hexes(map.Hexes[0][3].GetComponent<Hex>(),2f,Unit.Unit_type.INFANTRY);
+        //foreach (Hex hex in path){
+        //    Debug.Log(hex.Coordinates_x_y);
+        //}
+
+        control_map.Update_map(map,units);
+        //control_map.Print_controlled_hexes();
+        hex_painter.Paint_control(map,control_map);
+
+    }
+
+
+
+    private void Create_test_units(){
+        ////////////// UNIT 1 - GERMAN
+        GameObject hex_to_put_soldier = map.Hexes[1][1];
+        Vector3 hex_position = hex_to_put_soldier.transform.position;
+        Vector3 coords = new(hex_position.x,0.5f,hex_position.z);
+        GameObject soldier = Unit_generator.Generate_unit(
+            coords,("GermanUnit","TestC","TestA"),(2,1),(2,1),(3,2),
+            Unit.UNIT_BASE_HP,Unit.Unit_alliegance.GERMAN,Unit.Unit_condition.NORMAL,Unit.Unit_type.INFANTRY
+        );
+        Unit soldier_component = soldier.GetComponent<Unit>();
+        soldier_component.Hex = hex_to_put_soldier.GetComponent<Hex>();
+        hex_to_put_soldier.GetComponent<Hex>().Unit = soldier_component;
+        units.Add(soldier_component);
+        /////////////////////////////
+
+        ////////////// UNIT 1 - RUSSIAN
+        hex_to_put_soldier = map.Hexes[3][1];
+        hex_position = hex_to_put_soldier.transform.position;
+        coords = new(hex_position.x,0.5f,hex_position.z);
+        GameObject soldier_2 = Unit_generator.Generate_unit(
+            coords,("RussianUnit","TestC","TestA"),(2,1),(2,1),(3,2),
+            Unit.UNIT_BASE_HP,Unit.Unit_alliegance.RUSSIAN,Unit.Unit_condition.NORMAL,Unit.Unit_type.INFANTRY
+        );
+        Unit soldier_2_component = soldier_2.GetComponent<Unit>();
+        soldier_2_component.Hex = hex_to_put_soldier.GetComponent<Hex>();
+        hex_to_put_soldier.GetComponent<Hex>().Unit = soldier_2_component;
+        units.Add(soldier_2_component);
+        /////////////////////////////
+
     }
 
     // Update is called once per frame

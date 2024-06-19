@@ -17,9 +17,6 @@ public class GeneratorHexmap{
         Assign_Edges(map);
         Initialize_hexes_default_properties(map);
         Setup_test_terrains(map);
-        Paint_hexes(map);
-
-
         //map.Print_hexes_neighbours();
         //map.Print_hexes_coords();
         return map;
@@ -39,7 +36,6 @@ public class GeneratorHexmap{
                 hex_object.name = $"Hex_{i}_{j}";
                 Hex hex_component = hex_object.AddComponent<Hex>();
                 hex_component.Coordinates_x_y = (i,j);
-                Hex_painter.Paint_hexes_edges(hex_object);
                 map.Hexes[i][j] = hex_object;
                 position.x += WIDTH_DISTANCE;
             }
@@ -110,23 +106,18 @@ private void Initialize_edges_default_properties(Hex hex){
     }
 }
 
-private void Paint_hexes(Hexmap map){
-    for(int i = 0; i < map.Hexes.Length; i++) {
-        for(int j = 0; j < map.Hexes[i].Length; j++){
-            Hex_painter.Paint_hex_via_terrain(map.Hexes[i][j]);
-        } 
-    }
-}
-
-
 private void Setup_test_terrains(Hexmap map){
     map.Hexes[0][2].GetComponent<Hex>().Terrain = Hex.Hex_terrain.FOREST;
     map.Hexes[1][2].GetComponent<Hex>().Terrain = Hex.Hex_terrain.CITY;
     map.Hexes[1][4].GetComponent<Hex>().Terrain = Hex.Hex_terrain.SWAMP;
     map.Hexes[1][3].GetComponent<Hex>().Terrain = Hex.Hex_terrain.HILL;
     map.Hexes[2][0].GetComponent<Hex>().Terrain = Hex.Hex_terrain.FOREST;
-    map.Hexes[0][3].GetComponent<Hex>().Edges[0].Value.Separator = Edge.Edge_separator.HUGE_RIVER;
-    map.Hexes[1][3].GetComponent<Hex>().Edges[1].Value.Separator = Edge.Edge_separator.LAKE;
+
+    map.Hexes[0][3].GetComponent<Hex>().Set_mutual_edge_properties(0,Edge.Edge_hex_connector.ROAD,Edge.Edge_separator.HUGE_RIVER);
+    map.Hexes[1][3].GetComponent<Hex>().Set_mutual_edge_properties(1,Edge.Edge_hex_connector.ROAD,Edge.Edge_separator.LAKE);
+
+
+
 
 
 }

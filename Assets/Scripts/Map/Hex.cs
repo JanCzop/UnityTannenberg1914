@@ -10,8 +10,10 @@ public class Hex : MonoBehaviour
 
     private List<Edge_info> edges;
     private (int x,int y) coordinates_x_y;
+    private bool is_supply_hub;
     private Hex_allegiance allegiance;
     private Hex_terrain terrain;
+
 
     ///////////////////// TODO
     private Unit unit;
@@ -45,11 +47,23 @@ public class Edge_info{
         public Edge Value { get => value; set => this.value = value; }
     }
 
+    public bool Set_mutual_edge_properties(int index, Edge.Edge_hex_connector connector, Edge.Edge_separator separator){
+        Edge_info edge = edges.Find(e => e.Key == index);
+        if(edge == null) return false;
+        else {
+            edge.Value.Connector = connector;
+            edge.Value.Separator = separator;
+            return true;
+        }
+    }
+
+
 
     public (int, int) Coordinates_x_y { get => coordinates_x_y; set => coordinates_x_y = value; }
     public Hex_allegiance Allegiance { get => allegiance; set => allegiance = value; }
     public List<Edge_info> Edges { get => edges; set => edges = value; }
     public Hex_terrain Terrain { get => terrain; set => terrain = value; }
     public Unit Unit { get => unit; set => unit = value; }
+    public bool Is_supply_hub { get => is_supply_hub; set => is_supply_hub = value; }
 }
 

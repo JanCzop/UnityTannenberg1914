@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,12 @@ public class Edge
 
     public Edge(Hex neighbour_hex){
         this.neighbour_hex = neighbour_hex;
+    }
+
+    public static int Opposite_edge_index(int index){
+        if(index < 0 || index > 5) throw new ArgumentOutOfRangeException("Error: Index has to be in range from 0 to 5. This index is: " + index);
+        int multiplier = index >= 3 ? -1 : 1;
+        return index + (multiplier*3);
     }
 
     public enum Edge_separator{NONE,LAKE,SMALL_RIVER,HUGE_RIVER,VISTULA}
