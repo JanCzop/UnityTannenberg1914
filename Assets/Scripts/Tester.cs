@@ -10,12 +10,15 @@ public class Tester : MonoBehaviour
     //////// MOVE TO BUTTON
     public Control_map control_map;
     public Hex_painter hex_painter;
+    public Supply_map supply_map;
     /////////////////////////////
     void Start()
     {   
         hex_painter = GetComponent<Hex_painter>();
         control_map = GetComponent<Control_map>();
+        supply_map = GetComponent<Supply_map>();
         control_map.Initialize();
+        supply_map.Initialize();
 
 
 
@@ -40,9 +43,16 @@ public class Tester : MonoBehaviour
         //    Debug.Log(hex.Coordinates_x_y);
         //}
 
+
         control_map.Update_map(map,units);
-        //control_map.Print_controlled_hexes();
-        hex_painter.Paint_control(map,control_map);
+        //hex_painter.Paint_control(map,control_map);
+
+        map.Hexes[3][1].GetComponent<Hex>().Is_supply_hub = true;
+
+        supply_map.Update_map(map,units);
+        hex_painter.Paint_supply_lines(map,supply_map.Supply.german);
+
+        
 
     }
 

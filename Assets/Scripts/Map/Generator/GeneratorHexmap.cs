@@ -116,16 +116,18 @@ private void Initialize_hexes_default_properties(Hexmap map){
             Hex hex = map.Hexes[i][j].GetComponent<Hex>();
             hex.Allegiance = Hex.Hex_allegiance.GERMAN;
             hex.Terrain = Hex.Hex_terrain.FLAT;
-            //Initialize_edges_default_properties(hex);
+            Initialize_edges_default_properties(hex);
         } 
     }
 }
 
 private void Initialize_edges_default_properties(Hex hex){
     foreach(Hex.Edge_info edge in hex.Edges){
-        edge.Value.Separator = Edge.Edge_separator.NONE;
-        edge.Value.Connector = Edge.Edge_hex_connector.NONE;
-    }
+            edge.Value = new Edge{
+                Separator = Edge.Edge_separator.NONE,
+                Connector = Edge.Edge_hex_connector.NONE
+            };
+        }
 }
 
 private void Setup_test_terrains(Hexmap map){
@@ -134,6 +136,8 @@ private void Setup_test_terrains(Hexmap map){
     map.Hexes[1][4].GetComponent<Hex>().Terrain = Hex.Hex_terrain.SWAMP;
     map.Hexes[1][3].GetComponent<Hex>().Terrain = Hex.Hex_terrain.HILL;
     map.Hexes[2][0].GetComponent<Hex>().Terrain = Hex.Hex_terrain.FOREST;
+    map.Hexes[4][3].GetComponent<Hex>().Terrain = Hex.Hex_terrain.SMALL_URBAN;
+
 
    
 

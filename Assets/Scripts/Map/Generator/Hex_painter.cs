@@ -9,6 +9,8 @@ public class Hex_painter : MonoBehaviour
     public const string EDGE_MATERIAL_PATH = "Materials/Material_black";
     public const string DEFAULT_MATERIAL_PATH = "Materials/Material_default";
 
+    public const string SUPPLY_MATERIAL_PATH = "Materials/Supply/Material_supply";
+
 
     public const string FOREST_MATERIAL_PATH = "Materials/Material_green";
     public const string CITY_MATERIAL_PATH = "Materials/Material_yellow";
@@ -82,6 +84,17 @@ public class Hex_painter : MonoBehaviour
                     _ => ""
                 };
                 if(path != "") edges_renderer.material = Resources.Load<Material>(path);
+            }
+        }
+    }
+
+    public void Paint_supply_lines(Hexmap map, bool[][] supply_map){
+        Reset_hexes_color(map);
+        for(int i = 0; i < map.Hexes.Length; i++) {
+            for(int j = 0; j < map.Hexes[i].Length; j++){
+                Hex hex = map.Hexes[i][j].GetComponent<Hex>();
+                Renderer edges_renderer = Get_renderer_reference(hex, "Center");
+                if(supply_map[i][j]) edges_renderer.material = Resources.Load<Material>(SUPPLY_MATERIAL_PATH);
             }
         }
     }
