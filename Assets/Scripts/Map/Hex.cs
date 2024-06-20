@@ -8,6 +8,8 @@ public class Hex : MonoBehaviour
 {
     //public const int NUMBER_OF_EDGES = 6;
 
+    public static event Action<GameObject> On_hex_clicked;
+
     private List<Edge_info> edges;
     private (int x,int y) coordinates_x_y;
     private bool is_supply_hub;
@@ -59,6 +61,10 @@ public class Edge_info{
             edge.Value.Separator = separator;
             return true;
         }
+    }
+
+    public void OnMouseDown(){
+        On_hex_clicked?.Invoke(gameObject);
     }
 
 

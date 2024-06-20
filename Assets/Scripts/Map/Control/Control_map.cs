@@ -27,8 +27,6 @@ public class Control_map : MonoBehaviour
             foreach (Hex.Edge_info edge in unit.Hex.Edges){
                 Hex neighbourHex = edge.Hex;
                 if (neighbourHex.Unit == null){
-                                    if(x==1&&y==1) Debug.Log("Im here");
-
                     (int nx, int ny) = neighbourHex.Coordinates_x_y;
                     control_hexes[nx][ny] = Assign_control(control_hexes[nx][ny], unit.Alliegance,false);
                 }

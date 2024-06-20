@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Tester : MonoBehaviour
 {
+    int COUNTER = 0;
+
     public Hexmap map;
     public List<Unit> units = new();
 
@@ -28,7 +30,7 @@ public class Tester : MonoBehaviour
         hex_painter.Paint_map_terrain(map);
         this.map = map;
 
-        
+
 
         Create_test_units();
 
@@ -86,8 +88,30 @@ public class Tester : MonoBehaviour
         hex_to_put_soldier.GetComponent<Hex>().Unit = soldier_2_component;
         units.Add(soldier_2_component);
         /////////////////////////////
+        
+        StartListening();
+
 
     }
+
+    /// przeniesc do TurnHandler:
+    
+    void StartListening()
+    {
+        Hex.On_hex_clicked += HandleObjectClicked;
+    }
+
+    void StopListening()
+    {
+        Hex.On_hex_clicked -= HandleObjectClicked;
+    }
+
+    void HandleObjectClicked(GameObject hex_object){
+        Debug.Log(hex_object.GetComponent<Hex>().Coordinates_x_y);
+        COUNTER++;
+        if(COUNTER>3) StopListening();
+    }
+    
 
     // Update is called once per frame
     void Update()
