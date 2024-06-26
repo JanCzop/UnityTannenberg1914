@@ -26,7 +26,7 @@ public class Control_map : MonoBehaviour
             control_hexes[x][y] = Assign_control(control_hexes[x][x],unit.Alliegance,true);
             foreach (Hex.Edge_info edge in unit.Hex.Edges){
                 Hex neighbourHex = edge.Hex;
-                if (neighbourHex.Unit == null){
+                if (neighbourHex.Units.Count == 0){
                     (int nx, int ny) = neighbourHex.Coordinates_x_y;
                     control_hexes[nx][ny] = Assign_control(control_hexes[nx][ny], unit.Alliegance,false);
                 }

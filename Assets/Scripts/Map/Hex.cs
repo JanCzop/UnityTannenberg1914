@@ -18,7 +18,7 @@ public class Hex : MonoBehaviour
 
 
     ///////////////////// TODO
-    private Unit unit;
+    private List<Unit> units;
     ////////////////////
 
     public enum Hex_allegiance{GERMAN,RUSSIAN}
@@ -72,7 +72,7 @@ public class Edge_info{
     public Hex_allegiance Allegiance { get => allegiance; set => allegiance = value; }
     public List<Edge_info> Edges { get => edges; set => edges = value; }
     public Hex_terrain Terrain { get => terrain; set => terrain = value; }
-    public Unit Unit { get => unit; set => unit = value; }
+    public List<Unit> Units { get => units; set => units = value; }
     public bool Is_supply_hub { get => is_supply_hub; set => is_supply_hub = value; }
 }
 

@@ -9,7 +9,7 @@ public class Unit : MonoBehaviour
 
     private (string division, string corp, string army) unit_name;
     private (int normal, int declassed) firepower;
-    private (int normal, int declassed) effeciency;
+    private (int normal, int declassed) efficiency;
     private (int normal, int declassed) movement;
 
     private int hitpoints;
@@ -35,6 +35,23 @@ public class Unit : MonoBehaviour
         return this.unit_name.ToString();
     }
 
+    public int Get_current_firepower(){
+        return condition == Unit_condition.NORMAL ? firepower.normal : firepower.declassed;
+    }
+    public int Get_current_efficiency(){
+        return condition == Unit_condition.NORMAL ? efficiency.normal : efficiency.declassed;
+    }
+    public int Get_current_movement(){
+        return condition == Unit_condition.NORMAL ? movement.normal : movement.declassed; 
+    }
+
+    public void Loose_hitpoints(int points){
+        if(points <= 0) return;
+        else if(points >= hitpoints){
+            
+        }
+    }
+
 
     public void Move(Vector3 start, Vector3 end, float velocity)
     {
@@ -44,7 +61,7 @@ public class Unit : MonoBehaviour
 
 
     public (int normal, int declassed) Firepower { get => firepower; set => firepower = value; }
-    public (int normal, int declassed) Effeciency { get => effeciency; set => effeciency = value; }
+    public (int normal, int declassed) Effeciency { get => efficiency; set => efficiency = value; }
     public (int normal, int declassed) Movement { get => movement; set => movement = value; }
     public int Hitpoints { get => hitpoints; set => hitpoints = value; }
     public float Remaining_movement { get => remaining_movement; set => remaining_movement = value; }

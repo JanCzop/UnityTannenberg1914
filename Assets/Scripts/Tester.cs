@@ -71,7 +71,7 @@ public class Tester : MonoBehaviour
         );
         Unit soldier_component = soldier.GetComponent<Unit>();
         soldier_component.Hex = hex_to_put_soldier.GetComponent<Hex>();
-        hex_to_put_soldier.GetComponent<Hex>().Unit = soldier_component;
+        hex_to_put_soldier.GetComponent<Hex>().Units.Add(soldier_component);
         units.Add(soldier_component);
         /////////////////////////////
 
@@ -85,7 +85,7 @@ public class Tester : MonoBehaviour
         );
         Unit soldier_2_component = soldier_2.GetComponent<Unit>();
         soldier_2_component.Hex = hex_to_put_soldier.GetComponent<Hex>();
-        hex_to_put_soldier.GetComponent<Hex>().Unit = soldier_2_component;
+        hex_to_put_soldier.GetComponent<Hex>().Units.Add(soldier_2_component);
         units.Add(soldier_2_component);
         /////////////////////////////
         

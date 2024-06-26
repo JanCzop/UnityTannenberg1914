@@ -36,12 +36,5 @@ public class Unit_generator
         return Resources.Load<GameObject>(UNIT_PREFAB_DUMMY);
     }
 
-    public static bool Assign_unit_to_hex(Unit unit, Hex hex){
-        if(unit == null || hex == null) return false;
-        else{
-            unit.Hex = hex;
-            hex.Unit = unit;
-            return true;
-        }
-    }
+
 }
