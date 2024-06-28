@@ -11,6 +11,7 @@ public class Unit : MonoBehaviour
     private (int normal, int declassed) firepower;
     private (int normal, int declassed) efficiency;
     private (int normal, int declassed) movement;
+    private bool is_commanded = false;
 
     private int hitpoints;
     private float remaining_movement;
@@ -18,6 +19,7 @@ public class Unit : MonoBehaviour
     private Unit_alliegance alliegance;
     private Unit_condition condition;
     private Unit_type type;
+    private General general_data;
 
     //////////////////////////////
     private Hex hex;
@@ -29,6 +31,25 @@ public class Unit : MonoBehaviour
     public enum Unit_alliegance { GERMAN, RUSSIAN }
     public enum Unit_condition { NORMAL, DOWNGRADED }
     public enum Unit_type {INFANTRY, CAVALRY, ARTILLERY, GENERAL, SUPPLY_WAGON}
+
+
+    public class General{
+        private General_initiative initiative;
+        private (int normal, int declassed) commmand_range;
+        private General_rank rank;
+        private General_order order;
+
+
+        public enum General_initiative{ACTIVE,NORMAL,PASSIVE}
+        public enum General_rank{ARMY,CORP}
+        public enum General_order{MARCH,STOP}
+        
+        public General_rank Rank { get => rank; set => rank = value; }
+        public (int normal, int declassed) Commmand_range { get => commmand_range; set => commmand_range = value; }
+        public General_initiative Initiative { get => initiative; set => initiative = value; }
+        public General_order Order { get => order; set => order = value; }
+    }
+
 
 
     public string Get_unit_name(){
@@ -45,11 +66,9 @@ public class Unit : MonoBehaviour
         return condition == Unit_condition.NORMAL ? movement.normal : movement.declassed; 
     }
 
-    public void Loose_hitpoints(int points){
-        if(points <= 0) return;
-        else if(points >= hitpoints){
-            
-        }
+    public void Swap_status(){
+        if(condition == Unit_condition.NORMAL) condition = Unit_condition.DOWNGRADED;
+        else if (condition == Unit_condition.DOWNGRADED) condition = Unit_condition.NORMAL;
     }
 
 
@@ -71,4 +90,6 @@ public class Unit : MonoBehaviour
     public (string division, string corp, string army) Unit_name { get => unit_name; set => unit_name = value; }
     public Hex Hex { get => hex; set => hex = value; }
     public Unit_movement_handler Movement_handler { get => movement_handler; set => movement_handler = value; }
+    public bool Is_commanded { get => is_commanded; set => is_commanded = value; }
+    public General General_data { get => general_data; set => general_data = value; }
 }

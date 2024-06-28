@@ -46,7 +46,7 @@ public class Tester : MonoBehaviour
         //}
 
 
-        control_map.Update_map(map,units);
+        control_map.Update_map(units);
         //hex_painter.Paint_control(map,control_map);
 
         map.Hexes[3][1].GetComponent<Hex>().Is_supply_hub = true;

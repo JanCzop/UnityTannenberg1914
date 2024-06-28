@@ -20,7 +20,7 @@ public class Control_map : MonoBehaviour
         }
     }
 
-    public void Update_map(Hexmap map, List<Unit> units){
+    public void Update_map(List<Unit> units){
         foreach (Unit unit in units){
             (int x, int y) = unit.Hex.Coordinates_x_y;
             control_hexes[x][y] = Assign_control(control_hexes[x][x],unit.Alliegance,true);

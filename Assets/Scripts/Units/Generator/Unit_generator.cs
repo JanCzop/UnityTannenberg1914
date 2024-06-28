@@ -30,6 +30,8 @@ public class Unit_generator
         unit.Alliegance = alliegance;
         unit.Condition = condition;
         unit.Type = type;
+        unit.General_data = null;
+        unit.Is_commanded = false;
     }
 
     public static GameObject Get_unit_Prefab(Unit.Unit_type type, Unit.Unit_alliegance alliegance){
