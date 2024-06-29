@@ -12,8 +12,13 @@ public class Camera_handler : MonoBehaviour
     public float min_z = -10.0f; // Minimum Z boundary
     public float max_z = 10.0f;  // Maximum Z boundary
 
+    private bool is_camera_locked;
+
+
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.L)) is_camera_locked = !is_camera_locked;
+        if(is_camera_locked) return;
         // Get input from the keyboard
         float move_x = Input.GetAxis("Horizontal");
         float move_z = Input.GetAxis("Vertical");
@@ -47,4 +52,10 @@ public class Camera_handler : MonoBehaviour
         // Apply the new position to the camera
         transform.position = new_position;
     }
+    void Start(){
+        is_camera_locked = true;
+    }
+
+    public bool Is_camera_locked { get => is_camera_locked; set => is_camera_locked = value; }
+
 }

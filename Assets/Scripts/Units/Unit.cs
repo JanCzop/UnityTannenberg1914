@@ -39,6 +39,13 @@ public class Unit : MonoBehaviour
         private General_rank rank;
         private General_order order;
 
+        public General(General_initiative initiative, (int normal, int declassed) commmand_range, General_rank rank, General_order order)
+        {
+            this.initiative = initiative;
+            this.commmand_range = commmand_range;
+            this.rank = rank;
+            this.order = order;
+        }
 
         public enum General_initiative{ACTIVE,NORMAL,PASSIVE}
         public enum General_rank{ARMY,CORP}
@@ -66,10 +73,16 @@ public class Unit : MonoBehaviour
         return condition == Unit_condition.NORMAL ? movement.normal : movement.declassed; 
     }
 
+    public int Get_current_control_range(){
+        if(this.general_data == null) return 0;
+        return condition == Unit_condition.NORMAL ? General_data.Commmand_range.normal : General_data.Commmand_range.declassed;
+    }
+
     public void Swap_status(){
         if(condition == Unit_condition.NORMAL) condition = Unit_condition.DOWNGRADED;
         else if (condition == Unit_condition.DOWNGRADED) condition = Unit_condition.NORMAL;
     }
+    
 
 
     public void Move(Vector3 start, Vector3 end, float velocity)

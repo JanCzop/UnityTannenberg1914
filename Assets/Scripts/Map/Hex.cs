@@ -15,6 +15,7 @@ public class Hex : MonoBehaviour
     private bool is_supply_hub;
     private Hex_allegiance allegiance;
     private Hex_terrain terrain;
+    private int victory_points;
 
 
     ///////////////////// TODO
@@ -74,5 +75,6 @@ public class Edge_info{
     public Hex_terrain Terrain { get => terrain; set => terrain = value; }
     public List<Unit> Units { get => units; set => units = value; }
     public bool Is_supply_hub { get => is_supply_hub; set => is_supply_hub = value; }
+    public int Victory_points { get => victory_points; set => victory_points = value; }
 }
 

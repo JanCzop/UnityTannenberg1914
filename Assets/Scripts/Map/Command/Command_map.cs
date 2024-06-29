@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,28 +11,49 @@ public class Command_map : MonoBehaviour
     
     public void Initialize(Control_map map_control){
         this.map_control = map_control;
-        russian_command_map = new bool[Hexmap.MAP_LENGTH][];
-        german_command_map = new bool[Hexmap.MAP_LENGTH][];
+        russian_command_map = new bool[Hexmap.MAP_HEIGHT][];
+        german_command_map = new bool[Hexmap.MAP_HEIGHT][];
 
-        for (int i = 0; i < Hexmap.MAP_LENGTH; i++){
-            russian_command_map[i] = new bool[Hexmap.MAP_HEIGHT];
-            german_command_map[i] = new bool[Hexmap.MAP_HEIGHT];
+        for (int i = 0; i < Hexmap.MAP_HEIGHT; i++){
+            russian_command_map[i] = new bool[Hexmap.MAP_WIDTH];
+            german_command_map[i] = new bool[Hexmap.MAP_WIDTH];
 
-            for (int j = 0; j < Hexmap.MAP_HEIGHT; j++){
+            for (int j = 0; j < Hexmap.MAP_WIDTH; j++){
                 russian_command_map[i][j] = false;                
                 german_command_map[i][j] = false;
             }
         }
     }
 
-    public void Update(List<Unit> units){
-        List<Unit> german_units = new();
-        List<Unit> russian_units = new();
-        foreach (Unit unit in units){
-            if(unit.Alliegance == Unit.Unit_alliegance.GERMAN) german_units.Add(unit);
-            else if (unit.Alliegance == Unit.Unit_alliegance.RUSSIAN) russian_units.Add(unit);
+    public void Update_map(List<Unit> generals){
+        List<Unit> german_generals = new();
+        List<Unit> russian_generals = new();
+        foreach (Unit general in generals){
+            if(general.General_data != null && general.Type == Unit.Unit_type.GENERAL){
+                if(general.Alliegance == Unit.Unit_alliegance.GERMAN) german_generals.Add(general);
+                else if (general.Alliegance == Unit.Unit_alliegance.RUSSIAN) russian_generals.Add(general);
+            }
+            else throw new ArgumentException("Error: Provided unit is not a general.");
         }
-        
+        Update_army_generals_commands(german_generals.FindAll(g => g.General_data.Rank == Unit.General.General_rank.ARMY), Unit.Unit_alliegance.GERMAN);
+        Update_army_generals_commands(russian_generals.FindAll(g => g.General_data.Rank == Unit.General.General_rank.ARMY), Unit.Unit_alliegance.RUSSIAN);
+
+    }
+
+    private void Update_army_generals_commands(List<Unit> army_generals, Unit.Unit_alliegance alliegance){
+        HashSet<Hex> commanded_hexes = new();
+        foreach (Unit general in army_generals){
+            if(general.Hex != null) {
+                List<Hex> temp_list = A_star_movement.Get_hexes_in_range(general.Hex,general.Get_current_control_range());
+                foreach (Hex temp_hex in temp_list) commanded_hexes.Add(temp_hex);
+            }
+        }
+        bool[][] updated_map = alliegance == Unit.Unit_alliegance.GERMAN ? german_command_map : russian_command_map;
+        Unit.Unit_alliegance enemy = alliegance == Unit.Unit_alliegance.GERMAN ? Unit.Unit_alliegance.GERMAN : Unit.Unit_alliegance.RUSSIAN;
+        foreach (Hex hex in commanded_hexes) {
+            if(map_control.Control_hexes[hex.Coordinates_x_y.Item1][hex.Coordinates_x_y.Item2] != Control_map.Get_this_allegiance_control_type(enemy)) 
+                updated_map[hex.Coordinates_x_y.Item1][hex.Coordinates_x_y.Item2] = true;
+        }
     }
 
 

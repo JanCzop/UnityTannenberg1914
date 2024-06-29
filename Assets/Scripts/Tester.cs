@@ -54,7 +54,7 @@ public class Tester : MonoBehaviour
         supply_map.Update_map(map,units);
         hex_painter.Paint_supply_lines(map,supply_map.Supply.german);
 
-        
+
 
     }
 
@@ -75,7 +75,7 @@ public class Tester : MonoBehaviour
         units.Add(soldier_component);
         /////////////////////////////
 
-        ////////////// UNIT 1 - RUSSIAN
+        ////////////// UNIT 2 - RUSSIAN
         hex_to_put_soldier = map.Hexes[3][1];
         hex_position = hex_to_put_soldier.transform.position;
         coords = new(hex_position.x,0.5f,hex_position.z);
@@ -88,7 +88,24 @@ public class Tester : MonoBehaviour
         hex_to_put_soldier.GetComponent<Hex>().Units.Add(soldier_2_component);
         units.Add(soldier_2_component);
         /////////////////////////////
-        
+        ///
+
+        ///////////////// UNIT 3 - GERMAN ARMY GENERAL
+        /////////////////
+        hex_to_put_soldier = map.Hexes[3][0];
+        hex_position = hex_to_put_soldier.transform.position;
+        coords = new(hex_position.x,0.5f,hex_position.z);
+        GameObject soldier_3 = Unit_generator.Generate_unit(
+            coords,("GermanArmyGeneral","TestC","TestA"),(0,0),(0,0),(0,0),
+            Unit.UNIT_BASE_HP,Unit.Unit_alliegance.GERMAN,Unit.Unit_condition.NORMAL,Unit.Unit_type.GENERAL
+        );
+        Unit soldier_3_component = soldier_3.GetComponent<Unit>();
+        soldier_3_component.General_data = new(Unit.General.General_initiative.ACTIVE, (3,1),
+        Unit.General.General_rank.ARMY, Unit.General.General_order.MARCH);
+        soldier_3_component.Hex = hex_to_put_soldier.GetComponent<Hex>();
+        hex_to_put_soldier.GetComponent<Hex>().Units.Add(soldier_3_component);
+        units.Add(soldier_3_component);
+
         StartListening();
 
 
@@ -109,7 +126,7 @@ public class Tester : MonoBehaviour
     void HandleObjectClicked(GameObject hex_object){
         Debug.Log(hex_object.GetComponent<Hex>().Coordinates_x_y);
         COUNTER++;
-        if(COUNTER>3) StopListening();
+        if(COUNTER>100) StopListening();
     }
     
 
@@ -118,4 +135,17 @@ public class Tester : MonoBehaviour
     {
         
     }
+
+    private string List_viewer(List<Hex> hexes){
+        string str = "";
+        foreach(Hex hex in hexes) str += hex.ToString() + "\n";
+        
+        return str;
+    }
+    private string Edges_viewer(List<Hex.Edge_info> edges){
+        string str = "";
+        foreach (Hex.Edge_info edge in edges) str += "Connected with hex " + edge.Hex.ToString() + "\n";
+        return str;
+    }
+
 }

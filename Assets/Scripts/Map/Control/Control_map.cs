@@ -11,10 +11,10 @@ public class Control_map : MonoBehaviour
     
 
     public void Initialize(){
-        control_hexes = new Control_type[Hexmap.MAP_LENGTH][];
-        for (int i = 0; i < Hexmap.MAP_LENGTH; i++){
-            control_hexes[i] = new Control_type[Hexmap.MAP_HEIGHT];
-            for (int j = 0; j < Hexmap.MAP_HEIGHT; j++){
+        control_hexes = new Control_type[Hexmap.MAP_HEIGHT][];
+        for (int i = 0; i < Hexmap.MAP_HEIGHT; i++){
+            control_hexes[i] = new Control_type[Hexmap.MAP_WIDTH];
+            for (int j = 0; j < Hexmap.MAP_WIDTH; j++){
                 control_hexes[i][j] = Control_type.NONE;
             }
         }
@@ -22,16 +22,24 @@ public class Control_map : MonoBehaviour
 
     public void Update_map(List<Unit> units){
         foreach (Unit unit in units){
-            (int x, int y) = unit.Hex.Coordinates_x_y;
-            control_hexes[x][y] = Assign_control(control_hexes[x][x],unit.Alliegance,true);
-            foreach (Hex.Edge_info edge in unit.Hex.Edges){
-                Hex neighbourHex = edge.Hex;
-                if (neighbourHex.Units.Count == 0){
-                    (int nx, int ny) = neighbourHex.Coordinates_x_y;
-                    control_hexes[nx][ny] = Assign_control(control_hexes[nx][ny], unit.Alliegance,false);
+            if(unit.Type != Unit.Unit_type.SUPPLY_WAGON && unit.Type != Unit.Unit_type.ARTILLERY && unit.Type != Unit.Unit_type.GENERAL){
+                (int x, int y) = unit.Hex.Coordinates_x_y;
+                control_hexes[x][y] = Assign_control(control_hexes[x][x],unit.Alliegance,true);
+                foreach (Hex.Edge_info edge in unit.Hex.Edges){
+                    if(Movement.Is_edge_passable(edge.Value) && Movement.Is_hex_enterable(edge.Hex.Terrain)){
+                        Hex neighbourHex = edge.Hex;
+                        if (neighbourHex.Units.Count == 0){
+                            (int nx, int ny) = neighbourHex.Coordinates_x_y;
+                            control_hexes[nx][ny] = Assign_control(control_hexes[nx][ny], unit.Alliegance,false);
+                        }
+                    }
                 }
             }
         }
+    }
+
+    public static Control_map.Control_type Get_this_allegiance_control_type(Unit.Unit_alliegance alliegance){
+        return alliegance == Unit.Unit_alliegance.GERMAN ? Control_type.GERMAN : Control_type.RUSSIAN;
     }
 
      public override string ToString(){

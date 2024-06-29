@@ -5,17 +5,17 @@ using UnityEngine;
 
 public class Hexmap
 {
-    public const int MAP_LENGTH = 11;
-    public const int MAP_HEIGHT = 5;
+    public const int MAP_HEIGHT = 11;
+    public const int MAP_WIDTH = 5; // ITS DOUBLED ON MAP
     private GameObject[][] hexes;
 
     public Hexmap(){
-        if(MAP_LENGTH <= 0 || MAP_HEIGHT <= 0)
-        throw new ArgumentException("Error:Map's dimensions are not valid: x="+MAP_LENGTH+", y="+MAP_HEIGHT);
+        if(MAP_HEIGHT <= 0 || MAP_WIDTH <= 0)
+        throw new ArgumentException("Error: Map's dimensions are not valid: x=" + MAP_HEIGHT +", y=" + MAP_WIDTH);
 
-        hexes = new GameObject[MAP_LENGTH][];
-        for (int i = 0; i < MAP_LENGTH; i++){
-            hexes[i] = new GameObject[MAP_HEIGHT];
+        hexes = new GameObject[MAP_HEIGHT][];
+        for (int i = 0; i < MAP_HEIGHT; i++){
+            hexes[i] = new GameObject[MAP_WIDTH];
         }
     }
 

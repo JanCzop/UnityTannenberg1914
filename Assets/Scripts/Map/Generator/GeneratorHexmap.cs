@@ -57,10 +57,10 @@ private void Assign_Edges(Hexmap map)
                 
                 if (hex_component != null)
                 {
-                    if (i != Hexmap.MAP_LENGTH - 1 && i != Hexmap.MAP_LENGTH - 2)
+                    if (i != Hexmap.MAP_HEIGHT - 1 && i != Hexmap.MAP_HEIGHT - 2)
                         hex_component.Edges.Add(new Hex.Edge_info(0, map.Hexes[i + 2][j].GetComponent<Hex>()));
                     
-                    if (i != Hexmap.MAP_LENGTH - 1 && j != Hexmap.MAP_HEIGHT - 1)
+                    if (i != Hexmap.MAP_HEIGHT - 1 && (j != Hexmap.MAP_WIDTH - 1 || i % 2 == 1))
                     {
                         if (i % 2 == 0)
                             hex_component.Edges.Add(new Hex.Edge_info(1, map.Hexes[i + 1][j + 1].GetComponent<Hex>()));
@@ -68,7 +68,7 @@ private void Assign_Edges(Hexmap map)
                             hex_component.Edges.Add(new Hex.Edge_info(1, map.Hexes[i + 1][j].GetComponent<Hex>()));
                     }
                     
-                    if (i != 0 && j != Hexmap.MAP_HEIGHT - 1)
+                    if (i != 0 && (j != Hexmap.MAP_WIDTH - 1 || i % 2 == 1))
                     {
                         if (i % 2 == 0)
                             hex_component.Edges.Add(new Hex.Edge_info(2, map.Hexes[i - 1][j + 1].GetComponent<Hex>()));
@@ -79,7 +79,7 @@ private void Assign_Edges(Hexmap map)
                     if (i != 0 && i != 1)
                         hex_component.Edges.Add(new Hex.Edge_info(3, map.Hexes[i - 2][j].GetComponent<Hex>()));
                     
-                    if (i != 0 && j != 0)
+                    if (i != 0 && (j != 0 || i % 2 != 1))
                     {
                         if (i % 2 == 0)
                             hex_component.Edges.Add(new Hex.Edge_info(4, map.Hexes[i - 1][j].GetComponent<Hex>()));
@@ -87,7 +87,7 @@ private void Assign_Edges(Hexmap map)
                             hex_component.Edges.Add(new Hex.Edge_info(4, map.Hexes[i - 1][j - 1].GetComponent<Hex>()));
                     }
                     
-                    if (i != Hexmap.MAP_LENGTH - 1 && j != 0)
+                    if (i != Hexmap.MAP_HEIGHT - 1 && (j != 0 || i % 2 != 1))
                     {
                         if (i % 2 == 0)
                             hex_component.Edges.Add(new Hex.Edge_info(5, map.Hexes[i + 1][j].GetComponent<Hex>()));
@@ -116,6 +116,8 @@ private void Initialize_hexes_default_properties(Hexmap map){
             Hex hex = map.Hexes[i][j].GetComponent<Hex>();
             hex.Allegiance = Hex.Hex_allegiance.GERMAN;
             hex.Terrain = Hex.Hex_terrain.FLAT;
+            hex.Victory_points = 0;
+            hex.Units = new();
             Initialize_edges_default_properties(hex);
         } 
     }
@@ -137,12 +139,8 @@ private void Setup_test_terrains(Hexmap map){
     map.Hexes[1][3].GetComponent<Hex>().Terrain = Hex.Hex_terrain.HILL;
     map.Hexes[2][0].GetComponent<Hex>().Terrain = Hex.Hex_terrain.FOREST;
     map.Hexes[4][3].GetComponent<Hex>().Terrain = Hex.Hex_terrain.SMALL_URBAN;
-
-
-   
-
-
-
+    map.Hexes[5][0].GetComponent<Hex>().Terrain = Hex.Hex_terrain.SEA;
+    map.Hexes[4][0].GetComponent<Hex>().Terrain = Hex.Hex_terrain.SEA;
 
 
 }

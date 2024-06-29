@@ -6,6 +6,7 @@ using UnityEngine.TerrainTools;
 
 public class Hex_painter : MonoBehaviour
 {
+    public const string TEST_MATERIAL_PATH = "Materials/Material_testing";
     public const string EDGE_MATERIAL_PATH = "Materials/Material_black";
     public const string DEFAULT_MATERIAL_PATH = "Materials/Material_default";
 
@@ -16,6 +17,7 @@ public class Hex_painter : MonoBehaviour
     public const string CITY_MATERIAL_PATH = "Materials/Material_yellow";
     public const string SWAMP_MATERIAL_PATH = "Materials/Material_swamplike";
     public const string HILL_MATERIAL_PATH = "Materials/Material_grey";
+    public const string SEA_MATERIAL_PATH = "Materials/Material_blue";
 
     
     public const string GERMAN_MATERIAL_PATH = "Materials/Control/Material_GERMAN";
@@ -63,10 +65,11 @@ public class Hex_painter : MonoBehaviour
             Hex.Hex_terrain.FOREST => FOREST_MATERIAL_PATH,
             Hex.Hex_terrain.SWAMP => SWAMP_MATERIAL_PATH,
             Hex.Hex_terrain.CITY => CITY_MATERIAL_PATH,
+            Hex.Hex_terrain.SEA => SEA_MATERIAL_PATH,
             _ => ""
             };
-        if(path != "") edges_renderer.material = Resources.Load<Material>(path);
-        } 
+            if(path != "") edges_renderer.material = Resources.Load<Material>(path);
+            } 
         }
     }
 
@@ -96,6 +99,16 @@ public class Hex_painter : MonoBehaviour
                 Renderer edges_renderer = Get_renderer_reference(hex, "Center");
                 if(supply_map[i][j]) edges_renderer.material = Resources.Load<Material>(SUPPLY_MATERIAL_PATH);
             }
+        }
+    }
+
+    public void Paint_testing(Hexmap map, List<Hex> hexes){
+        Reset_hexes_color(map);
+        foreach(Hex list_hex in hexes) {
+            (int x, int y) = list_hex.Coordinates_x_y;
+            Hex hex = map.Hexes[x][y].GetComponent<Hex>();
+            Renderer edges_renderer = Get_renderer_reference(hex,"Center");
+            edges_renderer.material = Resources.Load<Material>(TEST_MATERIAL_PATH);
         }
     }
 
