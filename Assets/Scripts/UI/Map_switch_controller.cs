@@ -10,6 +10,7 @@ public class Map_switch_controller : MonoBehaviour
     public Button german_supply_button;
     public Button russian_supply_button;
     public Button control_button;
+    public Button german_command_button;
 
     private Button last_clicked_button;
 
@@ -21,6 +22,7 @@ public class Map_switch_controller : MonoBehaviour
         //german_supply_button.onClick.AddListener(On_german_supply_click);
         //russian_supply_button.onClick.AddListener(On_russian_supply_click);
         control_button.onClick.AddListener(On_control_map_click);
+        german_command_button.onClick.AddListener(On_german_command_button);
     }
 
     public void On_german_supply_click(){
@@ -28,6 +30,10 @@ public class Map_switch_controller : MonoBehaviour
     }
 
     public void On_russian_supply_click(){
+    }
+
+    public void On_german_command_button(){
+        game.hex_painter.Paint_command(game.map, game.command_map, Unit.Unit_alliegance.GERMAN);
     }
 
     public void On_control_map_click(){

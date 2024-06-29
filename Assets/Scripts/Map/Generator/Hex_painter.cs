@@ -91,13 +91,13 @@ public class Hex_painter : MonoBehaviour
         }
     }
 
-    public void Paint_supply_lines(Hexmap map, bool[][] supply_map){
+    public void Paint_supply_lines(Hexmap map, Supply_map supply_map){ //////////////////////////////// TO DO
         Reset_hexes_color(map);
         for(int i = 0; i < map.Hexes.Length; i++) {
             for(int j = 0; j < map.Hexes[i].Length; j++){
                 Hex hex = map.Hexes[i][j].GetComponent<Hex>();
                 Renderer edges_renderer = Get_renderer_reference(hex, "Center");
-                if(supply_map[i][j]) edges_renderer.material = Resources.Load<Material>(SUPPLY_MATERIAL_PATH);
+                if(supply_map.Supply.german[i][j]) edges_renderer.material = Resources.Load<Material>(SUPPLY_MATERIAL_PATH);
             }
         }
     }
@@ -110,6 +110,27 @@ public class Hex_painter : MonoBehaviour
             Renderer edges_renderer = Get_renderer_reference(hex,"Center");
             edges_renderer.material = Resources.Load<Material>(TEST_MATERIAL_PATH);
         }
+    }
+
+    public void Paint_command(Hexmap map, Command_map command_map, Unit.Unit_alliegance alliegance){
+        Reset_hexes_color(map);
+        bool[][] temp_command = alliegance == Unit.Unit_alliegance.GERMAN ? command_map.German_command_map : command_map.Russian_command_map;
+        for(int i = 0; i < map.Hexes.Length; i++) {
+            for(int j = 0; j < map.Hexes[i].Length; j++){
+                if(temp_command[i][j]){
+                    Hex hex = map.Hexes[i][j].GetComponent<Hex>();
+                    Renderer edges_renderer = Get_renderer_reference(hex, "Center");
+                    string path = alliegance switch{
+                        Unit.Unit_alliegance.GERMAN => GERMAN_MATERIAL_PATH,
+                        Unit.Unit_alliegance.RUSSIAN => RUSSIAN_MATERIAL_PATH,
+                        _ => ""
+                    };
+                    if(path != "") edges_renderer.material = Resources.Load<Material>(path);
+                }
+            }
+        }
+
+
     }
 
 }

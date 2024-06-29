@@ -75,4 +75,40 @@ public class A_star_movement
 
     return hexesInRange;
 }
+
+
+ public static List<Hex> Get_hexes_in_range_command_line(Hex startHex, int range, Unit.Unit_alliegance alliegance, Control_map control_map)
+    {
+    List<Hex> hexesInRange = new();
+    Queue<(Hex hex, int currentRange)> queue = new();
+    HashSet<Hex> visited = new();
+
+    hexesInRange.Add(startHex);
+    queue.Enqueue((startHex, range));
+    visited.Add(startHex);
+
+    while (queue.Count > 0)
+    {
+        var (currentHex, currentRange) = queue.Dequeue();
+        if (currentRange > 0)
+        {
+            foreach (var edge in currentHex.Edges)
+            {
+                Hex neighbourHex = edge.Hex;
+                if (neighbourHex != null && !visited.Contains(neighbourHex) &&
+                    Movement.Is_edge_passable(edge.Value) && Movement.Is_hex_enterable(neighbourHex.Terrain) &&
+                    control_map.Control_hexes[neighbourHex.Coordinates_x_y.Item1][neighbourHex.Coordinates_x_y.Item2] != 
+                        Control_map.Get_this_allegiance_control_type(Unit.Get_enemy_alliegance(alliegance))
+                    )
+                {
+                    hexesInRange.Add(neighbourHex);
+                    queue.Enqueue((neighbourHex, currentRange - 1));
+                    visited.Add(neighbourHex);
+                }
+            }
+        }
+    }
+
+    return hexesInRange;
+}
 }

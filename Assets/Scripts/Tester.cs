@@ -8,19 +8,23 @@ public class Tester : MonoBehaviour
 
     public Hexmap map;
     public List<Unit> units = new();
+    public List<Unit> only_generals = new();
 
     //////// MOVE TO BUTTON
     public Control_map control_map;
     public Hex_painter hex_painter;
     public Supply_map supply_map;
+    public Command_map command_map;
     /////////////////////////////
     void Start()
     {   
         hex_painter = GetComponent<Hex_painter>();
         control_map = GetComponent<Control_map>();
         supply_map = GetComponent<Supply_map>();
+        command_map = GetComponent<Command_map>();
         control_map.Initialize();
         supply_map.Initialize();
+        command_map.Initialize();
 
 
 
@@ -50,11 +54,9 @@ public class Tester : MonoBehaviour
         //hex_painter.Paint_control(map,control_map);
 
         map.Hexes[3][1].GetComponent<Hex>().Is_supply_hub = true;
-
         supply_map.Update_map(map,units);
-        hex_painter.Paint_supply_lines(map,supply_map.Supply.german);
 
-
+        command_map.Update_map(only_generals,control_map);
 
     }
 
@@ -100,11 +102,12 @@ public class Tester : MonoBehaviour
             Unit.UNIT_BASE_HP,Unit.Unit_alliegance.GERMAN,Unit.Unit_condition.NORMAL,Unit.Unit_type.GENERAL
         );
         Unit soldier_3_component = soldier_3.GetComponent<Unit>();
-        soldier_3_component.General_data = new(Unit.General.General_initiative.ACTIVE, (3,1),
+        soldier_3_component.General_data = new(Unit.General.General_initiative.ACTIVE, (4,1),
         Unit.General.General_rank.ARMY, Unit.General.General_order.MARCH);
         soldier_3_component.Hex = hex_to_put_soldier.GetComponent<Hex>();
         hex_to_put_soldier.GetComponent<Hex>().Units.Add(soldier_3_component);
         units.Add(soldier_3_component);
+        only_generals.Add(soldier_3_component);
 
         StartListening();
 

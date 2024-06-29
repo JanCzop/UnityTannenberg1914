@@ -9,8 +9,7 @@ public class Command_map : MonoBehaviour
     private bool[][] russian_command_map;
     private bool[][] german_command_map;
     
-    public void Initialize(Control_map map_control){
-        this.map_control = map_control;
+    public void Initialize(){
         russian_command_map = new bool[Hexmap.MAP_HEIGHT][];
         german_command_map = new bool[Hexmap.MAP_HEIGHT][];
 
@@ -25,7 +24,8 @@ public class Command_map : MonoBehaviour
         }
     }
 
-    public void Update_map(List<Unit> generals){
+    public void Update_map(List<Unit> generals, Control_map map_control){
+        this.map_control = map_control;
         List<Unit> german_generals = new();
         List<Unit> russian_generals = new();
         foreach (Unit general in generals){
@@ -44,12 +44,12 @@ public class Command_map : MonoBehaviour
         HashSet<Hex> commanded_hexes = new();
         foreach (Unit general in army_generals){
             if(general.Hex != null) {
-                List<Hex> temp_list = A_star_movement.Get_hexes_in_range(general.Hex,general.Get_current_control_range());
+                List<Hex> temp_list = A_star_movement.Get_hexes_in_range_command_line(general.Hex,general.Get_current_control_range(),alliegance,map_control);
                 foreach (Hex temp_hex in temp_list) commanded_hexes.Add(temp_hex);
             }
         }
         bool[][] updated_map = alliegance == Unit.Unit_alliegance.GERMAN ? german_command_map : russian_command_map;
-        Unit.Unit_alliegance enemy = alliegance == Unit.Unit_alliegance.GERMAN ? Unit.Unit_alliegance.GERMAN : Unit.Unit_alliegance.RUSSIAN;
+        Unit.Unit_alliegance enemy = Unit.Get_enemy_alliegance(alliegance);
         foreach (Hex hex in commanded_hexes) {
             if(map_control.Control_hexes[hex.Coordinates_x_y.Item1][hex.Coordinates_x_y.Item2] != Control_map.Get_this_allegiance_control_type(enemy)) 
                 updated_map[hex.Coordinates_x_y.Item1][hex.Coordinates_x_y.Item2] = true;

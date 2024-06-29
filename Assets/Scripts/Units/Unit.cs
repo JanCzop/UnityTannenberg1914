@@ -31,7 +31,9 @@ public class Unit : MonoBehaviour
     public enum Unit_alliegance { GERMAN, RUSSIAN }
     public enum Unit_condition { NORMAL, DOWNGRADED }
     public enum Unit_type {INFANTRY, CAVALRY, ARTILLERY, GENERAL, SUPPLY_WAGON}
-
+    public static Unit_alliegance Get_enemy_alliegance(Unit_alliegance alliegance){
+        return alliegance == Unit.Unit_alliegance.GERMAN ? Unit.Unit_alliegance.RUSSIAN : Unit.Unit_alliegance.GERMAN;
+    }
 
     public class General{
         private General_initiative initiative;
