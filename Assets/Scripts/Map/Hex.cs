@@ -64,6 +64,13 @@ public class Edge_info{
         }
     }
 
+    public int Get_x(){
+        return this.coordinates_x_y.x;
+    }
+    public int Get_y(){
+        return this.coordinates_x_y.y;
+    }
+
     public void OnMouseDown(){
         On_hex_clicked?.Invoke(gameObject);
     }

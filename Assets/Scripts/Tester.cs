@@ -109,6 +109,32 @@ public class Tester : MonoBehaviour
         units.Add(soldier_3_component);
         only_generals.Add(soldier_3_component);
 
+
+        //////////////// UNIT 4 - GERMAN CORP GENERAL
+        /////////////////
+        hex_to_put_soldier = map.Hexes[3][2];
+        hex_position = hex_to_put_soldier.transform.position;
+        coords = new(hex_position.x,0.5f,hex_position.z);
+        GameObject soldier_4 = Unit_generator.Generate_unit(
+            coords,("GermanCorpGeneral","TestC","TestA"),(0,0),(0,0),(0,0),
+            Unit.UNIT_BASE_HP,Unit.Unit_alliegance.GERMAN,Unit.Unit_condition.NORMAL,Unit.Unit_type.GENERAL
+        );
+        Unit soldier_4_component = soldier_4.GetComponent<Unit>();
+        soldier_4_component.General_data = new(Unit.General.General_initiative.PASSIVE, (1,1),
+        Unit.General.General_rank.CORP, Unit.General.General_order.MARCH);
+        soldier_4_component.Hex = hex_to_put_soldier.GetComponent<Hex>();
+        hex_to_put_soldier.GetComponent<Hex>().Units.Add(soldier_4_component);
+        units.Add(soldier_4_component);
+        only_generals.Add(soldier_4_component);
+
+
+
+
+
+
+
+
+
         StartListening();
 
 

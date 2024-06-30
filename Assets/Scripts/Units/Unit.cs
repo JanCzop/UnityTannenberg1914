@@ -36,10 +36,14 @@ public class Unit : MonoBehaviour
     }
 
     public class General{
+        public const int MAX_ADDITIONAL_UNIT_CAP_CORP = 2;
+        public const int MAX_ADDITIONAL_UNIT_CAP_ARMY = 5;
         private General_initiative initiative;
+        private General_order last_turn_order;
         private (int normal, int declassed) commmand_range;
         private General_rank rank;
         private General_order order;
+        private List<Unit> additional_commanded_units;
 
         public General(General_initiative initiative, (int normal, int declassed) commmand_range, General_rank rank, General_order order)
         {
@@ -47,6 +51,8 @@ public class Unit : MonoBehaviour
             this.commmand_range = commmand_range;
             this.rank = rank;
             this.order = order;
+            this.Last_turn_order = order;
+            this.additional_commanded_units = new();
         }
 
         public enum General_initiative{ACTIVE,NORMAL,PASSIVE}
@@ -57,6 +63,8 @@ public class Unit : MonoBehaviour
         public (int normal, int declassed) Commmand_range { get => commmand_range; set => commmand_range = value; }
         public General_initiative Initiative { get => initiative; set => initiative = value; }
         public General_order Order { get => order; set => order = value; }
+        public List<Unit> Additional_commanded_units { get => additional_commanded_units; set => additional_commanded_units = value; }
+        public General_order Last_turn_order { get => last_turn_order; set => last_turn_order = value; }
     }
 
 
@@ -84,6 +92,8 @@ public class Unit : MonoBehaviour
         if(condition == Unit_condition.NORMAL) condition = Unit_condition.DOWNGRADED;
         else if (condition == Unit_condition.DOWNGRADED) condition = Unit_condition.NORMAL;
     }
+
+
     
 
 

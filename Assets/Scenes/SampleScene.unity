@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 171286133}
   - component: {fileID: 171286134}
   - component: {fileID: 171286135}
+  - component: {fileID: 171286136}
   m_Layer: 0
   m_Name: Tester
   m_TagString: Untagged
@@ -156,9 +157,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   units: []
+  only_generals: []
   control_map: {fileID: 0}
   hex_painter: {fileID: 0}
   supply_map: {fileID: 0}
+  command_map: {fileID: 0}
 --- !u!4 &171286132
 Transform:
   m_ObjectHideFlags: 0
@@ -209,6 +212,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80207b6ea6a20d749978684071be469c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &171286136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171286130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 151c4660b6fb3f04bb257c7999888e3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &197320915
@@ -268,6 +283,7 @@ MonoBehaviour:
   german_supply_button: {fileID: 0}
   russian_supply_button: {fileID: 0}
   control_button: {fileID: 1657601043}
+  german_command_button: {fileID: 1437357493}
 --- !u!1 &318787373
 GameObject:
   m_ObjectHideFlags: 0
