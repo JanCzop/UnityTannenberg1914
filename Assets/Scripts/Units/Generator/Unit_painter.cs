@@ -9,10 +9,10 @@ public class Unit_painter
 
         public static void Paint_unit(GameObject unit){
             Renderer renderer = unit.transform.GetComponent<Renderer>();
-            Unit.Unit_alliegance alliegance = unit.GetComponent<Unit>().Alliegance;
+            Allegiance alliegance = unit.GetComponent<Unit>().Alliegance;
             string path = alliegance switch{
-                Unit.Unit_alliegance.GERMAN => GERMAN_MATERIAL_PATH,
-                Unit.Unit_alliegance.RUSSIAN => RUSSIAN_MATERIAL_PATH,
+                Allegiance.GERMAN => GERMAN_MATERIAL_PATH,
+                Allegiance.RUSSIAN => RUSSIAN_MATERIAL_PATH,
                 _ => ""
             };
             if(path == "") return;

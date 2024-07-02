@@ -7,7 +7,7 @@ public class A_star_movement
     {
         Dictionary<Hex, float> distances = new();
         List<Hex> reachableHexes = new();
-        Priority_Queue<Tuple<float, Hex>> priorityQueue = new Priority_Queue<Tuple<float, Hex>>();
+        Priority_Queue<Tuple<float, Hex>> priorityQueue = new();
 
         distances[startHex] = 0f;
         priorityQueue.Enqueue(Tuple.Create(0f, startHex), 0f);
@@ -77,7 +77,7 @@ public class A_star_movement
 }
 
 
- public static List<Hex> Get_hexes_in_range_command_line(Hex startHex, int range, Unit.Unit_alliegance alliegance, Control_map control_map)
+ public static List<Hex> Get_hexes_in_range_command_line(Hex startHex, int range, Allegiance alliegance, Control_map control_map)
     {
     List<Hex> hexesInRange = new();
     Queue<(Hex hex, int currentRange)> queue = new();
@@ -98,7 +98,7 @@ public class A_star_movement
                 if (neighbourHex != null && !visited.Contains(neighbourHex) &&
                     Movement.Is_edge_passable(edge.Value) && Movement.Is_hex_enterable(neighbourHex.Terrain) &&
                     control_map.Control_hexes[neighbourHex.Coordinates_x_y.Item1][neighbourHex.Coordinates_x_y.Item2] != 
-                        Control_map.Get_this_allegiance_control_type(Unit.Get_enemy_alliegance(alliegance))
+                        Control_map.Get_this_allegiance_control_type(Allegiance_helper.Get_enemy_alliegance(alliegance))
                     )
                 {
                     hexesInRange.Add(neighbourHex);

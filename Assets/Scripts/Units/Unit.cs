@@ -11,12 +11,11 @@ public class Unit : MonoBehaviour
     private (int normal, int declassed) firepower;
     private (int normal, int declassed) efficiency;
     private (int normal, int declassed) movement;
-    private bool is_commanded = false;
 
     private int hitpoints;
     private float remaining_movement;
 
-    private Unit_alliegance alliegance;
+    private Allegiance alliegance;
     private Unit_condition condition;
     private Unit_type type;
     private General general_data;
@@ -28,11 +27,10 @@ public class Unit : MonoBehaviour
     private Unit_movement_handler movement_handler;
 
 
-    public enum Unit_alliegance { GERMAN, RUSSIAN }
     public enum Unit_condition { NORMAL, DOWNGRADED }
     public enum Unit_type {INFANTRY, CAVALRY, ARTILLERY, GENERAL, SUPPLY_WAGON}
-    public static Unit_alliegance Get_enemy_alliegance(Unit_alliegance alliegance){
-        return alliegance == Unit.Unit_alliegance.GERMAN ? Unit.Unit_alliegance.RUSSIAN : Unit.Unit_alliegance.GERMAN;
+    public static Allegiance Get_enemy_alliegance(Allegiance alliegance){
+        return alliegance == Allegiance.GERMAN ? Allegiance.RUSSIAN : Allegiance.GERMAN;
     }
 
     public class General{
@@ -109,12 +107,11 @@ public class Unit : MonoBehaviour
     public (int normal, int declassed) Movement { get => movement; set => movement = value; }
     public int Hitpoints { get => hitpoints; set => hitpoints = value; }
     public float Remaining_movement { get => remaining_movement; set => remaining_movement = value; }
-    public Unit_alliegance Alliegance { get => alliegance; set => alliegance = value; }
+    public Allegiance Alliegance { get => alliegance; set => alliegance = value; }
     public Unit_condition Condition { get => condition; set => condition = value; }
     public Unit_type Type { get => type; set => type = value; }
     public (string division, string corp, string army) Unit_name { get => unit_name; set => unit_name = value; }
     public Hex Hex { get => hex; set => hex = value; }
     public Unit_movement_handler Movement_handler { get => movement_handler; set => movement_handler = value; }
-    public bool Is_commanded { get => is_commanded; set => is_commanded = value; }
     public General General_data { get => general_data; set => general_data = value; }
 }

@@ -112,17 +112,17 @@ public class Hex_painter : MonoBehaviour
         }
     }
 
-    public void Paint_command(Hexmap map, Command_map command_map, Unit.Unit_alliegance alliegance){
+    public void Paint_command(Hexmap map, Command_map command_map, Allegiance alliegance){
         Reset_hexes_color(map);
-        bool[][] temp_command = alliegance == Unit.Unit_alliegance.GERMAN ? command_map.German_command_map : command_map.Russian_command_map;
+        bool[][] temp_command = alliegance == Allegiance.GERMAN ? command_map.German_command_map : command_map.Russian_command_map;
         for(int i = 0; i < map.Hexes.Length; i++) {
             for(int j = 0; j < map.Hexes[i].Length; j++){
                 if(temp_command[i][j]){
                     Hex hex = map.Hexes[i][j].GetComponent<Hex>();
                     Renderer edges_renderer = Get_renderer_reference(hex, "Center");
                     string path = alliegance switch{
-                        Unit.Unit_alliegance.GERMAN => GERMAN_MATERIAL_PATH,
-                        Unit.Unit_alliegance.RUSSIAN => RUSSIAN_MATERIAL_PATH,
+                        Allegiance.GERMAN => GERMAN_MATERIAL_PATH,
+                        Allegiance.RUSSIAN => RUSSIAN_MATERIAL_PATH,
                         _ => ""
                     };
                     if(path != "") edges_renderer.material = Resources.Load<Material>(path);

@@ -33,7 +33,7 @@ public class Map_switch_controller : MonoBehaviour
     }
 
     public void On_german_command_button(){
-        game.hex_painter.Paint_command(game.map, game.command_map, Unit.Unit_alliegance.GERMAN);
+        game.hex_painter.Paint_command(game.map, game.command_map,Allegiance.GERMAN);
     }
 
     public void On_control_map_click(){

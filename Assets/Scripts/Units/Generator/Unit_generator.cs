@@ -8,7 +8,7 @@ public class Unit_generator
     public const string UNIT_PREFAB_DUMMY = "Prefabs/Soldier_dummy";
 
     public static GameObject Generate_unit(Vector3 position,(string division, string corp, string army) unit_name, (int normal, int declassed) firepower, (int normal, int declassed) effeciency,
-    (int normal, int declassed) movement, int hitpoints, Unit.Unit_alliegance alliegance,
+    (int normal, int declassed) movement, int hitpoints, Allegiance alliegance,
     Unit.Unit_condition condition, Unit.Unit_type type){
         GameObject unit_object = GameObject.Instantiate(Get_unit_Prefab(type,alliegance),position,Quaternion.identity);
         unit_object.name = unit_name.ToString();
@@ -20,7 +20,7 @@ public class Unit_generator
     }
 
     private static void Update_unit_component(Unit unit,Unit_movement_handler unit_movement_handler, (int normal, int declassed) firepower, (int normal, int declassed) effeciency,
-    (int normal, int declassed) movement, int hitpoints, Unit.Unit_alliegance alliegance,
+    (int normal, int declassed) movement, int hitpoints, Allegiance alliegance,
     Unit.Unit_condition condition, Unit.Unit_type type){
         unit.Movement_handler = unit_movement_handler;
         unit.Firepower = firepower;
@@ -31,10 +31,10 @@ public class Unit_generator
         unit.Condition = condition;
         unit.Type = type;
         unit.General_data = null;
-        unit.Is_commanded = false;
+        //unit.Is_commanded = false;
     }
 
-    public static GameObject Get_unit_Prefab(Unit.Unit_type type, Unit.Unit_alliegance alliegance){
+    public static GameObject Get_unit_Prefab(Unit.Unit_type type, Allegiance alliegance){
         return Resources.Load<GameObject>(UNIT_PREFAB_DUMMY);
     }
 

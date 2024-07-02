@@ -35,8 +35,8 @@ public class Command_map : MonoBehaviour
         List<Unit> russian_generals = new();
         foreach (Unit general in generals){
             if(general.General_data != null && general.Type == Unit.Unit_type.GENERAL){
-                if(general.Alliegance == Unit.Unit_alliegance.GERMAN) german_generals.Add(general);
-                else if (general.Alliegance == Unit.Unit_alliegance.RUSSIAN) russian_generals.Add(general);
+                if(general.Alliegance == Allegiance.GERMAN) german_generals.Add(general);
+                else if (general.Alliegance == Allegiance.RUSSIAN) russian_generals.Add(general);
             }
             else throw new ArgumentException("Error: Provided unit is not a general.");
         }
@@ -47,18 +47,18 @@ public class Command_map : MonoBehaviour
     private void Update_army_generals_commands(List<Unit> german_generals, List<Unit> russian_generals){
         foreach(Unit german_general in german_generals) german_general.General_data.Order = Unit.General.General_order.MARCH;
         foreach(Unit russian_general in russian_generals) russian_general.General_data.Order = Unit.General.General_order.MARCH;
-        Update_commands(german_generals.FindAll(g => g.General_data.Rank == Unit.General.General_rank.ARMY), Unit.Unit_alliegance.GERMAN);
-        Update_commands(russian_generals.FindAll(g => g.General_data.Rank == Unit.General.General_rank.ARMY), Unit.Unit_alliegance.RUSSIAN);
+        Update_commands(german_generals.FindAll(g => g.General_data.Rank == Unit.General.General_rank.ARMY), Allegiance.GERMAN);
+        Update_commands(russian_generals.FindAll(g => g.General_data.Rank == Unit.General.General_rank.ARMY), Allegiance.RUSSIAN);
     }
 
     private void Update_corp_generals_commands(List<Unit> german_generals, List<Unit> russian_generals){
-        Update_corp_generals_orders(german_generals.FindAll(g => g.General_data.Rank == Unit.General.General_rank.CORP), Unit.Unit_alliegance.GERMAN);
-        Update_corp_generals_orders(russian_generals.FindAll(g => g.General_data.Rank == Unit.General.General_rank.CORP), Unit.Unit_alliegance.RUSSIAN);
+        Update_corp_generals_orders(german_generals.FindAll(g => g.General_data.Rank == Unit.General.General_rank.CORP), Allegiance.GERMAN);
+        Update_corp_generals_orders(russian_generals.FindAll(g => g.General_data.Rank == Unit.General.General_rank.CORP), Allegiance.RUSSIAN);
     }
 
 
 
-    private void Update_corp_generals_orders(List<Unit> corp_generals, Unit.Unit_alliegance alliegance){
+    private void Update_corp_generals_orders(List<Unit> corp_generals, Allegiance alliegance){
         Set_commanded_corp_generals_to_march(corp_generals, alliegance);
         Update_commands(corp_generals.FindAll(g => g.General_data.Order == Unit.General.General_order.MARCH),alliegance);
         List<Unit> own_command_successfull_generals = new();
@@ -71,7 +71,7 @@ public class Command_map : MonoBehaviour
         }
         Update_commands(own_command_successfull_generals,alliegance);
     }
-    private void Set_commanded_corp_generals_to_march(List<Unit> corp_generals, Unit.Unit_alliegance alliegance){
+    private void Set_commanded_corp_generals_to_march(List<Unit> corp_generals, Allegiance alliegance){
         bool[][] command_map_temp = Get_proper_command_map(alliegance);
         foreach(Unit general in corp_generals){
             if(command_map_temp[general.Hex.Get_x()][general.Hex.Get_y()]) general.General_data.Order = Unit.General.General_order.MARCH;
@@ -93,7 +93,7 @@ public class Command_map : MonoBehaviour
         return result <= MAX_OWN_COMMANDMENT_RESULT_BARRIER;
     }
 
-    private void Update_commands(List<Unit> generals, Unit.Unit_alliegance alliegance){
+    private void Update_commands(List<Unit> generals, Allegiance alliegance){
         HashSet<Hex> commanded_hexes = new();
         foreach (Unit general in generals){
             if(general.Hex != null) {
@@ -102,7 +102,7 @@ public class Command_map : MonoBehaviour
             }
         }
         bool[][] updated_map = Get_proper_command_map(alliegance);
-        Unit.Unit_alliegance enemy = Unit.Get_enemy_alliegance(alliegance);
+        Allegiance enemy = Allegiance_helper.Get_enemy_alliegance(alliegance);
         foreach (Hex hex in commanded_hexes) {
             if(map_control.Control_hexes[hex.Get_x()][hex.Get_y()] != Control_map.Get_this_allegiance_control_type(enemy))
                 updated_map[hex.Get_x()][hex.Get_y()] = true;
@@ -110,8 +110,8 @@ public class Command_map : MonoBehaviour
     }
 
 
-    public bool[][] Get_proper_command_map(Unit.Unit_alliegance alliegance){
-        return alliegance == Unit.Unit_alliegance.GERMAN ? this.German_command_map : this.Russian_command_map;
+    public bool[][] Get_proper_command_map(Allegiance alliegance){
+        return alliegance == Allegiance.GERMAN ? this.German_command_map : this.Russian_command_map;
     }
 
 

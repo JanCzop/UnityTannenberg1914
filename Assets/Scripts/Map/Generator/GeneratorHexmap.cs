@@ -36,7 +36,7 @@ public class GeneratorHexmap{
                 hex_object.name = $"Hex_{i}_{j}";
                 Hex hex_component = hex_object.AddComponent<Hex>();
                 hex_component.Coordinates_x_y = (i,j);
-                map.Hexes[i][j] = hex_object;
+                map.Hexes[i][j] = hex_component;
                 position.x += WIDTH_DISTANCE;
             }
         }
@@ -49,10 +49,7 @@ private void Assign_Edges(Hexmap map)
     {
         for (int j = 0; j < map.Hexes[i].Length; j++)
         {
-            GameObject hex_object = map.Hexes[i][j];
-            if (hex_object != null)
-            {
-                Hex hex_component = hex_object.GetComponent<Hex>();
+            Hex hex_component = map.Hexes[i][j];
                 hex_component.Edges = new List<Hex.Edge_info>();
                 
                 if (hex_component != null)
@@ -99,11 +96,7 @@ private void Assign_Edges(Hexmap map)
                 {
                     Debug.LogWarning($"Hex component not found on hex at position [{i},{j}].");
                 }
-            }
-            else
-            {
-                Debug.LogWarning($"GameObject at position [{i},{j}] is null.");
-            }
+
         }
     }
 }
@@ -114,8 +107,9 @@ private void Initialize_hexes_default_properties(Hexmap map){
     for(int i = 0; i < map.Hexes.Length; i++) {
         for(int j = 0; j < map.Hexes[i].Length; j++){
             Hex hex = map.Hexes[i][j].GetComponent<Hex>();
-            hex.Allegiance = Hex.Hex_allegiance.GERMAN;
+            hex.Allegiance = Allegiance.GERMAN;
             hex.Terrain = Hex.Hex_terrain.FLAT;
+            hex.Fortifications = null;
             hex.Victory_points = 0;
             hex.Units = new();
             Initialize_edges_default_properties(hex);

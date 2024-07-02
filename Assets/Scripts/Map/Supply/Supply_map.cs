@@ -26,7 +26,7 @@ public class Supply_map : MonoBehaviour
         for (int i = 0; i < Hexmap.MAP_HEIGHT; i++){
             for (int j = 0; j < Hexmap.MAP_WIDTH; j++){
                 Hex hex = map.Hexes[i][j].GetComponent<Hex>();
-                    if(hex.Is_supply_hub && hex.Allegiance == Hex.Hex_allegiance.GERMAN ||
+                    if(hex.Is_supply_hub && hex.Allegiance == Allegiance.GERMAN ||
                     hex.Terrain == Hex.Hex_terrain.SMALL_URBAN) supply.german[i][j] = true;
 
             }

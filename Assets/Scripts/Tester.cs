@@ -53,10 +53,11 @@ public class Tester : MonoBehaviour
         control_map.Update_map(units);
         //hex_painter.Paint_control(map,control_map);
 
-        map.Hexes[3][1].GetComponent<Hex>().Is_supply_hub = true;
+        map.Hexes[3][1].Is_supply_hub = true;
         supply_map.Update_map(map,units);
 
         command_map.Update_map(only_generals,control_map);
+        Debug.Log(map.Hexes[0][0].Get_neighbours_to_string());
 
     }
 
@@ -64,12 +65,12 @@ public class Tester : MonoBehaviour
 
     private void Create_test_units(){
         ////////////// UNIT 1 - GERMAN
-        GameObject hex_to_put_soldier = map.Hexes[1][1];
+        GameObject hex_to_put_soldier = map.Hexes[1][1].gameObject;
         Vector3 hex_position = hex_to_put_soldier.transform.position;
         Vector3 coords = new(hex_position.x,0.5f,hex_position.z);
         GameObject soldier = Unit_generator.Generate_unit(
             coords,("GermanUnit","TestC","TestA"),(2,1),(2,1),(3,2),
-            Unit.UNIT_BASE_HP,Unit.Unit_alliegance.GERMAN,Unit.Unit_condition.NORMAL,Unit.Unit_type.INFANTRY
+            Unit.UNIT_BASE_HP,Allegiance.GERMAN,Unit.Unit_condition.NORMAL,Unit.Unit_type.INFANTRY
         );
         Unit soldier_component = soldier.GetComponent<Unit>();
         soldier_component.Hex = hex_to_put_soldier.GetComponent<Hex>();
@@ -78,12 +79,12 @@ public class Tester : MonoBehaviour
         /////////////////////////////
 
         ////////////// UNIT 2 - RUSSIAN
-        hex_to_put_soldier = map.Hexes[3][1];
+        hex_to_put_soldier = map.Hexes[3][1].gameObject;
         hex_position = hex_to_put_soldier.transform.position;
         coords = new(hex_position.x,0.5f,hex_position.z);
         GameObject soldier_2 = Unit_generator.Generate_unit(
             coords,("RussianUnit","TestC","TestA"),(2,1),(2,1),(3,2),
-            Unit.UNIT_BASE_HP,Unit.Unit_alliegance.RUSSIAN,Unit.Unit_condition.NORMAL,Unit.Unit_type.INFANTRY
+            Unit.UNIT_BASE_HP,Allegiance.RUSSIAN,Unit.Unit_condition.NORMAL,Unit.Unit_type.INFANTRY
         );
         Unit soldier_2_component = soldier_2.GetComponent<Unit>();
         soldier_2_component.Hex = hex_to_put_soldier.GetComponent<Hex>();
@@ -94,12 +95,12 @@ public class Tester : MonoBehaviour
 
         ///////////////// UNIT 3 - GERMAN ARMY GENERAL
         /////////////////
-        hex_to_put_soldier = map.Hexes[3][0];
+        hex_to_put_soldier = map.Hexes[3][0].gameObject;
         hex_position = hex_to_put_soldier.transform.position;
         coords = new(hex_position.x,0.5f,hex_position.z);
         GameObject soldier_3 = Unit_generator.Generate_unit(
             coords,("GermanArmyGeneral","TestC","TestA"),(0,0),(0,0),(0,0),
-            Unit.UNIT_BASE_HP,Unit.Unit_alliegance.GERMAN,Unit.Unit_condition.NORMAL,Unit.Unit_type.GENERAL
+            Unit.UNIT_BASE_HP,Allegiance.GERMAN,Unit.Unit_condition.NORMAL,Unit.Unit_type.GENERAL
         );
         Unit soldier_3_component = soldier_3.GetComponent<Unit>();
         soldier_3_component.General_data = new(Unit.General.General_initiative.ACTIVE, (4,1),
@@ -112,12 +113,12 @@ public class Tester : MonoBehaviour
 
         //////////////// UNIT 4 - GERMAN CORP GENERAL
         /////////////////
-        hex_to_put_soldier = map.Hexes[3][2];
+        hex_to_put_soldier = map.Hexes[3][2].gameObject;
         hex_position = hex_to_put_soldier.transform.position;
         coords = new(hex_position.x,0.5f,hex_position.z);
         GameObject soldier_4 = Unit_generator.Generate_unit(
             coords,("GermanCorpGeneral","TestC","TestA"),(0,0),(0,0),(0,0),
-            Unit.UNIT_BASE_HP,Unit.Unit_alliegance.GERMAN,Unit.Unit_condition.NORMAL,Unit.Unit_type.GENERAL
+            Unit.UNIT_BASE_HP,Allegiance.GERMAN,Unit.Unit_condition.NORMAL,Unit.Unit_type.GENERAL
         );
         Unit soldier_4_component = soldier_4.GetComponent<Unit>();
         soldier_4_component.General_data = new(Unit.General.General_initiative.PASSIVE, (1,1),

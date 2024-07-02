@@ -38,8 +38,8 @@ public class Control_map : MonoBehaviour
         }
     }
 
-    public static Control_map.Control_type Get_this_allegiance_control_type(Unit.Unit_alliegance alliegance){
-        return alliegance == Unit.Unit_alliegance.GERMAN ? Control_type.GERMAN : Control_type.RUSSIAN;
+    public static Control_map.Control_type Get_this_allegiance_control_type(Allegiance alliegance){
+        return alliegance == Allegiance.GERMAN ? Control_type.GERMAN : Control_type.RUSSIAN;
     }
 
      public override string ToString(){
@@ -61,9 +61,9 @@ public class Control_map : MonoBehaviour
     }
 
 
-    private Control_type Assign_control(Control_type type_in_hex, Unit.Unit_alliegance alliegance, bool force){
-        if(force) return alliegance == Unit.Unit_alliegance.GERMAN ? Control_type.GERMAN : Control_type.RUSSIAN;
-        if (alliegance == Unit.Unit_alliegance.GERMAN){
+    private Control_type Assign_control(Control_type type_in_hex, Allegiance alliegance, bool force){
+        if(force) return alliegance == Allegiance.GERMAN ? Control_type.GERMAN : Control_type.RUSSIAN;
+        if (alliegance == Allegiance.GERMAN){
             return type_in_hex switch
             {
                 Control_type.GERMAN or Control_type.NONE => Control_type.GERMAN,
@@ -71,7 +71,7 @@ public class Control_map : MonoBehaviour
                 _ => throw new ArgumentOutOfRangeException(nameof(type_in_hex), type_in_hex, "Unexpected Control_type value"),
             };
         }
-        else if (alliegance == Unit.Unit_alliegance.RUSSIAN){
+        else if (alliegance == Allegiance.RUSSIAN){
             return type_in_hex switch
             {
                 Control_type.RUSSIAN or Control_type.NONE => Control_type.RUSSIAN,
@@ -81,6 +81,7 @@ public class Control_map : MonoBehaviour
         }
         else throw new ArgumentOutOfRangeException(nameof(type_in_hex), type_in_hex, "Unexpected Control_type value");
     }
+    
 
 
 
