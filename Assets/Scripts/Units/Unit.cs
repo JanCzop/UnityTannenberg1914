@@ -19,6 +19,7 @@ public class Unit : MonoBehaviour
     private Unit_condition condition;
     private Unit_type type;
     private General general_data;
+    private bool is_train_transported;
 
     //////////////////////////////
     private Hex hex;
@@ -114,4 +115,5 @@ public class Unit : MonoBehaviour
     public Hex Hex { get => hex; set => hex = value; }
     public Unit_movement_handler Movement_handler { get => movement_handler; set => movement_handler = value; }
     public General General_data { get => general_data; set => general_data = value; }
+    public bool Is_train_transported { get => is_train_transported; set => is_train_transported = value; }
 }

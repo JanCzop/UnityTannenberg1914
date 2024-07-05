@@ -34,7 +34,7 @@ public class Command_map : MonoBehaviour
         List<Unit> german_generals = new();
         List<Unit> russian_generals = new();
         foreach (Unit general in generals){
-            if(general.General_data != null && general.Type == Unit.Unit_type.GENERAL){
+            if(general.General_data != null && general.Type == Unit.Unit_type.GENERAL && !general.Is_train_transported){
                 if(general.Alliegance == Allegiance.GERMAN) german_generals.Add(general);
                 else if (general.Alliegance == Allegiance.RUSSIAN) russian_generals.Add(general);
             }

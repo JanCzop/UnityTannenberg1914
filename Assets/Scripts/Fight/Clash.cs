@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Clash : MonoBehaviour
@@ -11,7 +12,6 @@ public class Clash : MonoBehaviour
     private (List<Hex> german, List<Hex> russian) hexes;
     private ((List<Unit> troops, Unit commander) german, (List<Unit> troops, Unit commander) russian) units;
     private (Order_card german, Order_card russian) orders;
-    private int off_deff_quotient;
     private (Allegiance attacker, Allegiance defender) role;
     private Battle_preview preview;
     private Allegiance initiative_faction;
@@ -22,6 +22,30 @@ public class Clash : MonoBehaviour
     public enum Order_card{ATTACK,DEFEND,ASSAULT,RETREAT}
     public enum Battle_preview{ATTACK_VS_DEF,ATTACK_VS_RET,BOTH_ATTACK,NO_FIGHT}
 
+
+    private (int,int) Calculate_units_powers(){
+        (int german, int russian) power;
+        power.german = 0;
+        power.russian = 0;
+
+        foreach(Unit german_unit in units.german.troops) power.german += Calculate_single_unit_power(german_unit, Allegiance.GERMAN);
+        foreach(Unit russian_unit in units.russian.troops) power.russian += Calculate_single_unit_power(russian_unit, Allegiance.RUSSIAN);
+
+        return power;
+    }
+
+    private int Calculate_single_unit_power(Unit unit, Allegiance allegiance){
+        int power = unit.Get_current_firepower();
+        if(unit.Type == Unit.Unit_type.CAVALRY && !Is_this_only_cavalry_fight())
+            power = Divide_by_2_and_round_up(power);
+        else if(unit.Type == Unit.Unit_type.ARTILLERY && this.role.defender == allegiance)
+            power = Divide_by_2_and_round_up(power);
+        return power;
+    }
+    private int Divide_by_2_and_round_up(int x){
+        if(x % 2 == 1) return x/2+1;
+        else return x/2;
+    }
 
 
     private void Set_how_fight_takes_place(){
@@ -65,6 +89,7 @@ public class Clash : MonoBehaviour
         
         }
     }
+    
 
     private void Determine_who_is_attacking_int_open_battle(){
         bool is_attacker_determined = false;
@@ -115,12 +140,20 @@ public class Clash : MonoBehaviour
         return false;
         
     }
+    private bool Is_this_only_cavalry_fight(){
+        List<Unit> merged_list = new(); 
+        merged_list.AddRange(units.german.troops);
+        merged_list.AddRange(units.russian.troops);
+
+        foreach(Unit unit in merged_list) 
+            if (unit.Type == Unit.Unit_type.INFANTRY || unit.Type == Unit.Unit_type.ARTILLERY) return false;
+        return true;
+    }
 
 
 
     public Control_map Map_control { get => map_control; set => map_control = value; }
     public ((List<Unit> german, Unit german_commander), (List<Unit> russian, Unit russian_commander)) Units { get => units; set => units = value; }
-    public int Off_deff_quotient { get => off_deff_quotient; set => off_deff_quotient = value; }
     public (Allegiance attacker, Allegiance defender) Role { get => role; set => role = value; }
     public (Order_card german, Order_card russian) Orders { get => orders; set => orders = value; }
     public Battle_preview Preview { get => preview; set => preview = value; }

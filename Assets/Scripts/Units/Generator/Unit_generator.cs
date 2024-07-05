@@ -31,6 +31,7 @@ public class Unit_generator
         unit.Condition = condition;
         unit.Type = type;
         unit.General_data = null;
+        unit.Is_train_transported = false;
         //unit.Is_commanded = false;
     }
 

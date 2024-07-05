@@ -22,7 +22,8 @@ public class Control_map : MonoBehaviour
 
     public void Update_map(List<Unit> units){
         foreach (Unit unit in units){
-            if(unit.Type != Unit.Unit_type.SUPPLY_WAGON && unit.Type != Unit.Unit_type.ARTILLERY && unit.Type != Unit.Unit_type.GENERAL){
+            if(unit.Type != Unit.Unit_type.SUPPLY_WAGON && unit.Type != Unit.Unit_type.ARTILLERY && unit.Type != Unit.Unit_type.GENERAL 
+                && !unit.Is_train_transported){
                 (int x, int y) = unit.Hex.Coordinates_x_y;
                 control_hexes[x][y] = Assign_control(control_hexes[x][x],unit.Alliegance,true);
                 foreach (Hex.Edge_info edge in unit.Hex.Edges){
